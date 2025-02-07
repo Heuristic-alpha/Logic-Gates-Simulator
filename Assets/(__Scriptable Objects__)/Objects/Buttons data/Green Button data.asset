@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f9726540917bd4e80e6c6a2d768ce4, type: 3}
+  m_Name: Green Button data
+  m_EditorClassIdentifier: 
+  itemName: Green Button
+  itemIcon: {fileID: 21300000, guid: 84bc625e739a1e44f8d99f05049afb3f, type: 3}
+  itemPrefab: {fileID: 845218440995556167, guid: 89c44138da97af54a8bc1dd6d00a27c3, type: 3}

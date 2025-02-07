@@ -1,0 +1,119 @@
+using HSCL;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SaveLoadInfoScreen : WindowScreenBase
+{
+    // Unity GameObjects: //////////////////////////////////////////////////////
+    [SerializeField] GameObject _lastEditDateTimeGameObject;
+
+    // Unity Components: ///////////////////////////////////////////////////////
+    [SerializeField] private Button _saveButton;
+    [SerializeField] private Button _loadButton;
+    [SerializeField] private Button _deleteButton;
+    [SerializeField] private TMP_Text _panelNameTXT;
+    [SerializeField] private TMP_InputField _saveNameTXT;
+    [SerializeField] private TMP_Text _dateTimeTXT;
+
+    private SaveAndLoadPanelScreen _saveLoadScreen;
+
+    // C# Properties: //////////////////////////////////////////////////////////
+    // C# Fields: //////////////////////////////////////////////////////////////
+    private const string SAVE_INFO = "Save info";
+    private const string NEW_SAVE = "New save";
+    private string _newSaveName = "";
+    private char[] _RANDOM_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    private bool _isInInfoMode;
+
+    private string _saveFilePath;
+
+    // Unity Main Events: //////////////////////////////////////////////////////   
+    // Unity Other Events: /////////////////////////////////////////////////////
+
+    // C# Public Methods: //////////////////////////////////////////////////////
+    public override void OnCreate()
+    {
+        base.OnCreate();
+        _screenSample = HSCL.ScreenSample.SaveLoadInfoScreen;
+        if(!UIManager.Singeleton.TryGetScreen<SaveAndLoadPanelScreen>(ScreenSample.SaveLoadScreen, out _saveLoadScreen))
+        {
+            Debug.LogError("SaveLoadInfoScreen : SaveAndLoadPanelScreen is not found! ");
+        }
+    }
+
+    public void InitPanel(string saveFilePath, string fileName, string dateTime, bool openInInfoMode)
+    {
+        _saveFilePath = saveFilePath;
+        _isInInfoMode = openInInfoMode;
+        if (openInInfoMode) // save info mode
+        {
+            _saveButton.interactable = true;
+            _loadButton.interactable = true;
+            _deleteButton.interactable = true;
+            _panelNameTXT.text = SAVE_INFO;
+            _saveNameTXT.text = fileName;
+            _lastEditDateTimeGameObject.SetActive(true);
+            _dateTimeTXT.text = dateTime;
+        }
+        else   // new save mode
+        {
+            _saveButton.interactable = true;
+            _loadButton.interactable = false;
+            _deleteButton.interactable = false;
+            _panelNameTXT.text = NEW_SAVE;
+            _lastEditDateTimeGameObject.SetActive(false);
+            _saveNameTXT.text = _newSaveName;
+        }
+    }
+    public override void OnClickCloseWindowButton()
+    {
+        base.OnClickCloseWindowButton();
+        _saveLoadScreen.RefreshFileItems();
+    }
+    
+    public void OnPressSaveButton()
+    {
+        if (_isInInfoMode)
+        {
+            Save_Load_System.Singeleton.CreateSaveFileFromPath(_saveFilePath, _saveNameTXT.text);
+        }
+        else
+        {
+            Save_Load_System.Singeleton.CreateSaveFileFromName(GenerateRandomString(), _saveNameTXT.text);
+        }
+        OnClickCloseWindowButton();
+    }
+    public void OnPressLoadButton()
+    {
+        Save_Load_System.Singeleton.LoadSaveFileFromPath(_saveFilePath);
+        OnClickCloseWindowButton();
+
+        //close Save & Load Screen:
+        UIManager.Singeleton.DestroyTheFrontScreen();
+    }
+    public void OnPressDeleteButton()
+    {
+        Save_Load_System.Singeleton.DeleteSaveFileFromPath(_saveFilePath);
+        OnClickCloseWindowButton();
+    }
+
+    // C# Private Methods: /////////////////////////////////////////////////////
+
+    private string GenerateRandomString()
+    {
+        UnityEngine.Random.InitState((int)DateTime.Now.ToBinary());
+        int stringLength = 31;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < stringLength; i++)
+        {
+            sb.Append(_RANDOM_CHARS[UnityEngine.Random.Range(0, _RANDOM_CHARS.Length)]);
+        }
+        return sb.ToString();
+    }
+
+}

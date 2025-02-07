@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f9726540917bd4e80e6c6a2d768ce4, type: 3}
+  m_Name: Red Button data
+  m_EditorClassIdentifier: 
+  itemName: Red Button
+  itemIcon: {fileID: 21300000, guid: 3179573b1a598da4fb0eec69ab2589a9, type: 3}
+  itemPrefab: {fileID: 845218440995556167, guid: c5c6d25e6d9f74a44a3d132f41617927, type: 3}

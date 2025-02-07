@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597701d8e72c81a4c84918bc1a1c13cd, type: 3}
+  m_Name: item 12
+  m_EditorClassIdentifier: 
+  id: 12
+  display_name: NAND2
+  icon: {fileID: 21300000, guid: d4b031e117090254a947f74a655207ce, type: 3}
+  prefab: {fileID: 3828305456188115332, guid: d87e01275ef1f5d4dbd61a36dc2cd780, type: 3}
