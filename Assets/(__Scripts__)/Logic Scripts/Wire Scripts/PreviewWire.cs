@@ -99,7 +99,7 @@ public class PreviewWire : MonoBehaviour, IColorable
         for (int i = 0; i < lineResolution; i++)
         {
             float currentT = T_Holder.Get_t(lineResolution, i);
-            Vector3 currentPoint = Bezier.Cubic2D(_startPoint.transform.position,
+            Vector3 currentPoint = HSCL.Bezier.Cubic2D(_startPoint.transform.position,
                                                   IsPreviewWireStartFromStartPoint == true ? helperPoint1 : _startPoint.transform.position,
                                                   IsPreviewWireStartFromStartPoint == true ? _endPoint.transform.position : helperPoint2,
                                                   _endPoint.transform.position, currentT) ;

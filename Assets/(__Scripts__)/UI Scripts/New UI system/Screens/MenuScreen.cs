@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,9 @@ public class MenuScreen : WindowScreenBase
     // Unity GameObjects: //////////////////////////////////////////////////////
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject backPanel;
-    
+
     // Unity Components: ///////////////////////////////////////////////////////
+    [SerializeField] TMP_Text appVerText;
     RectTransform menuPanel_RectTransform;
     Image _backPanelImage;
 
@@ -28,6 +30,7 @@ public class MenuScreen : WindowScreenBase
         menuPanel_RectTransform = menuPanel.transform as RectTransform;
         _backPanelImage = backPanel.GetComponent<Image>();
         _screenSample = HSCL.ScreenSample.MenuScreen;
+        appVerText.text = $"Version \' {Application.version} \'";
         OpenMenu();
     }
     public override void OnUpdate()

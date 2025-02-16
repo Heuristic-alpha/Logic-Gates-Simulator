@@ -32,25 +32,25 @@ namespace HSCL
 
         public virtual void OnCreate()
         {
-            Debug.Log($"ScreenBase of type {gameObject.name} has Created.");
+            //Debug.Log($"ScreenBase of type {gameObject.name} has Created.");
         }
         public virtual void OnDestroyByUIManager()
         {
             Destroy(gameObject);
-            Debug.Log($"ScreenBase of type {gameObject.name} has Destroyed.");
+            //Debug.Log($"ScreenBase of type {gameObject.name} has Destroyed.");
 
         }
         public virtual void OnFocus()
         {
             _isFocused = true;
             _graphicRaycaster.enabled = _isFocused;
-            Debug.Log($"ScreenBase of type {gameObject.name} has Focused.");          
+            //Debug.Log($"ScreenBase of type {gameObject.name} has Focused.");          
         }
         public virtual void OnFocusLost()
         {
             _isFocused = false;
             _graphicRaycaster.enabled = _isFocused;
-            Debug.Log($"ScreenBase of type {gameObject.name} has Focus Losed.");
+            //Debug.Log($"ScreenBase of type {gameObject.name} has Focus Losed.");
         }
         public virtual void OnUpdate()
         {

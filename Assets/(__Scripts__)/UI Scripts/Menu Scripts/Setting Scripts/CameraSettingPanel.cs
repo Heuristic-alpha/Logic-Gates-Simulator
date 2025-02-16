@@ -17,23 +17,27 @@ public class CameraSettingPanel : MonoBehaviour
     private const string FULL_SCREEN_MODE_TEXT = "Full Screen Mode";
     private const string WINDOW_MODE_TEXT = "Window Mode";
 
+    // C# Fields: //////////////////////////////////////////////////////////////
+    float cameraSizeValueBeforeSliderInit = -1;
     [SerializeField] float cameraZoomAmountChangeOnZoomButtonClicked = 0.5f;
 
-    // C# Fields: //////////////////////////////////////////////////////////////
     // Unity Main Events: //////////////////////////////////////////////////////
     private void Awake()
     {
-        cameraController = Camera.main.GetComponent<CameraController>();
-        Init_cameraSizeSlider();   
-        if (cameraController == null) Debug.Log("camera controller is null");
-        if (Screen.fullScreenMode == FullScreenMode.FullScreenWindow) button_TEXT.text = FULL_SCREEN_MODE_TEXT;
-        else if (Screen.fullScreenMode == FullScreenMode.Windowed) button_TEXT.text = WINDOW_MODE_TEXT;
+        cameraController = Camera.main.GetComponent<CameraController>();    
     }
 
     // Unity Other Events: /////////////////////////////////////////////////////
-    private void Start()
+    private IEnumerator Start()
     {
-        cameraSizeSlider.value = cameraController.CameraCurrentSize;      
+        cameraSizeValueBeforeSliderInit = cameraController.CameraCurrentSize;
+        if (Screen.fullScreenMode == FullScreenMode.FullScreenWindow) button_TEXT.text = FULL_SCREEN_MODE_TEXT;
+        else if (Screen.fullScreenMode == FullScreenMode.Windowed) button_TEXT.text = WINDOW_MODE_TEXT;
+
+        // for some reason cameraSlider should be initlize after some time. there for it will broken:
+        yield return new WaitForEndOfFrame();
+        Init_cameraSizeSlider();
+        cameraSizeSlider.value = cameraSizeValueBeforeSliderInit;
     }
 
     // C# Public Methods: //////////////////////////////////////////////////////

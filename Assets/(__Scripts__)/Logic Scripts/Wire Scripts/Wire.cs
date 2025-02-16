@@ -41,8 +41,8 @@ public class Wire : MonoBehaviour, IColorable
     // C# Properties: ////////////////////////////////////////////////////////// 
     // C# Consts: //////////////////////////////////////////////////////////////
     public const float UnitLength = 0.6f;
-    public const int MinimumPoint = 20;
-    public const float WirePointsMinimumDistance = 0;
+    public const int MinimumPoint = 15;
+    public const float WirePointsMinimumDistance = 0.5f;
     public const float WirePointsMaximumDistance = 21;
     public const float HelperPointMinimumLength = 0.5f;
     public const float HelperPointMaximumLength = 3.5f;
@@ -147,7 +147,7 @@ public class Wire : MonoBehaviour, IColorable
         for (int i = 0; i < lineResolution; i++)
         {
             float currentT = T_Holder.Get_t(lineResolution, i);
-            Vector3 currentPoint = Bezier.Cubic2D(_startPoint.transform.position,
+            Vector3 currentPoint = HSCL.Bezier.Cubic2D(_startPoint.transform.position,
                                                   helperPoint1,
                                                   helperPoint2,
                                                   _endPoint.transform.position, currentT);
