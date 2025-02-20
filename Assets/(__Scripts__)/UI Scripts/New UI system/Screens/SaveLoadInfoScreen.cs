@@ -28,6 +28,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
     private const string NEW_SAVE = "New save";
     private string _newSaveName = "";
     private char[] _RANDOM_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    private char[] _forbiden_Chars = { '<', '/', '>', '!' ,'\\'};
     private bool _isInInfoMode;
 
     private string _saveFilePath;
@@ -102,18 +103,37 @@ public class SaveLoadInfoScreen : WindowScreenBase
         OnClickCloseWindowButton();
     }
 
+    // validate input field chars:
+    public void OnSaveNameTxtChange(string noThing)
+    {
+        string content = _saveNameTXT.text;
+        int length = content.Length;
+        if (length < 1) return;
+
+        char lastChar = content[length - 1];
+        foreach(char forbidChar in _forbiden_Chars)
+        {
+            if(forbidChar == lastChar)
+            {
+                _saveNameTXT.text = content.Substring(0, length - 1);
+                break;
+            }
+        }
+    
+    }
+
     // C# Private Methods: /////////////////////////////////////////////////////
 
     private string GenerateRandomString()
     {
         UnityEngine.Random.InitState((int)DateTime.Now.ToBinary());
-        int stringLength = 31;
-        StringBuilder sb = new StringBuilder();
+        int stringLength = 9;
+        StringBuilder random_sb = new StringBuilder();
         for (int i = 0; i < stringLength; i++)
         {
-            sb.Append(_RANDOM_CHARS[UnityEngine.Random.Range(0, _RANDOM_CHARS.Length)]);
+            random_sb.Append(_RANDOM_CHARS[UnityEngine.Random.Range(0, _RANDOM_CHARS.Length)]);
         }
-        return sb.ToString();
+        return $"({_saveNameTXT.text})_{random_sb.ToString()}{DateTime.Now.Ticks.ToString()}";
     }
 
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 458115893678372135}
   - component: {fileID: 5854301678744030352}
   - component: {fileID: 6623850603465302672}
-  - component: {fileID: 6671618430105811155}
   m_Layer: 5
   m_Name: Context Menu
   m_TagString: Untagged
@@ -77,19 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6671618430105811155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700189466039147257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce1fb7d0a39f0814d97c04bcea71c68b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerText: {fileID: 3329705512061963205}
 --- !u!1 &1102433776132116781
 GameObject:
   m_ObjectHideFlags: 0

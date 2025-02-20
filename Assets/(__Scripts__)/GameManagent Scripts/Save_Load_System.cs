@@ -325,11 +325,11 @@ public readonly struct WireInfo
 
 public readonly struct SaveInfo
 {
-    public readonly float version;
+    public readonly string version;
     public readonly string name;
     public readonly DateTime dateTime;
 
-    public SaveInfo(float version, string name, DateTime dateTime)
+    public SaveInfo(string version, string name, DateTime dateTime)
     {
         this.version = version;
         this.name = name;
@@ -369,7 +369,7 @@ public class SaveData
     private XmlParser parser;
 
     // save info
-    readonly float version;
+    readonly string version;
     readonly DateTime dateTime;
     readonly string saveDisplayName;
     // setting:
@@ -383,7 +383,7 @@ public class SaveData
     WireInfo[] wireInfos;
 
     // all properties:
-    public float Version { get { return version; } }
+    public string Version { get { return version; } }
     public DateTime DateTime { get { return dateTime; } }
     public string SaveDisplayName { get { return saveDisplayName; } }
     public Vector3 CameraPostion { get { return cameraPostion; } }
@@ -416,7 +416,7 @@ public class SaveData
         XmlTagInfo wiresTag = saveTag.GetChildNode(wires_TAG);
         XmlTagInfo[] wireTags = wiresTag.GetAllChildren();
 
-        version = float.Parse(verTag.GetContent());
+        version = verTag.GetContent();
         dateTime = DateTime.Parse(dateTimeTag.GetContent(), CultureInfo.InvariantCulture);
         saveDisplayName = nameTag.GetContent();
 
@@ -570,7 +570,7 @@ public class SaveData
         wireInfos = ItemManager.Singeleton.GetAllSpawnedWiresAsWireInfoes();
 
         content.Append(StartTag(save_TAG) + NEXT_LINE + NEXT_LINE);
-        content.Append(Write_SaveInfoTo_string(new SaveInfo(float.Parse(Application.version), saveDisplayName, DateTime.Now)) + NEXT_LINE + NEXT_LINE);
+        content.Append(Write_SaveInfoTo_string(new SaveInfo(Application.version, saveDisplayName, DateTime.Now)) + NEXT_LINE + NEXT_LINE);
         content.Append(Write_SettingTo_string() + NEXT_LINE + NEXT_LINE);
         content.Append(Write_ItemsInfoTo_string(itemInfos) + NEXT_LINE + NEXT_LINE);
         content.Append(Write_WiresInfoTo_string(wireInfos) + NEXT_LINE + NEXT_LINE);

@@ -7,7 +7,7 @@ public class ScreenResolutionUiController : MonoBehaviour
     [SerializeField] TMPro.TMP_Dropdown dropdown;
 
     [SerializeField] Vector2Int[] resolutions = new Vector2Int[] { new Vector2Int(1920,1080),
-                                                                   new Vector2Int(800,600),
+                                                                   new Vector2Int(888,500),
                                                                    new Vector2Int(1280,720),
                                                                    new Vector2Int(1366,768),
                                                                    new Vector2Int(1600,900),

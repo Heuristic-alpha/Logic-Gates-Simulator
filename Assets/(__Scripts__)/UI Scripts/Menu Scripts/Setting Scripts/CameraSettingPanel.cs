@@ -61,6 +61,7 @@ public class CameraSettingPanel : MonoBehaviour
     public void OnValueChange_CameraSizeSlider()
     {
         if (!Application.isPlaying) return;
+        if (cameraController == null) return;
 
         cameraController.SetCameraSizeExactly(cameraSizeSlider.value);
     }
