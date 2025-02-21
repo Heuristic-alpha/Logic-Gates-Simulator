@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class GridUiPanelControler : MonoBehaviour
 {
     // Unity GameObjects: //////////////////////////////////////////////////////
@@ -20,10 +19,16 @@ public class GridUiPanelControler : MonoBehaviour
 
     // C# Properties: //////////////////////////////////////////////////////////
     // C# Fields: //////////////////////////////////////////////////////////////
-    // Unity Main Events: //////////////////////////////////////////////////////
-    private void Awake()
+    // Unity Main Events: //////////////////////////////////////////////////////  
+
+    // Unity Other Events: /////////////////////////////////////////////////////
+    // C# Public Methods: //////////////////////////////////////////////////////
+
+    // most be called by SettingScreen
+    public void OnOpen()
     {
         _objectToGridPosition = GameManager.Instance.GetObjectToGridPositionScript();
+        if (_objectToGridPosition == null) Debug.LogWarning("Errooooooooooooooor");
         _BackGroundGridController = GameManager.Instance.GetBackGroundGridControllerScript();
 
         ScreenBase screen;
@@ -33,26 +38,22 @@ public class GridUiPanelControler : MonoBehaviour
         }
         FPSPanelObject = (screen as GamePlayScreen).Get_FPScounterobject();
         cameraPosObject = (screen as GamePlayScreen).Get_CameraPositionobject();
-    }
+        
 
-    private void OnEnable()
-    {
         _itemOnGridToggle.isOn = _objectToGridPosition.postionToGridEnabled;
         _showFPSToggle.isOn = FPSPanelObject.activeSelf;
         _showCamPosToggle.isOn = cameraPosObject.activeSelf;
     }
 
-    // Unity Other Events: /////////////////////////////////////////////////////
-    // C# Public Methods: //////////////////////////////////////////////////////
     public void OnClick_changeBackGroundColorButton()
     {
-        ColorPickerScreen screen = UIManager.Singeleton.CreateAndReturnScreen<ColorPickerScreen>(ScreenSample.ColorPickerScreen);
+        ColorPickerScreen screen = UIManager.Singeleton.OpenAndReturnScreen<ColorPickerScreen>(ScreenSample.ColorPickerScreen);
         screen.Init(_BackGroundGridController.Get_BackColor(), OnBackGroundColorChanged);
     }
 
     public void OnClick_changeLineColorButton()
     {
-        ColorPickerScreen screen = UIManager.Singeleton.CreateAndReturnScreen<ColorPickerScreen>(ScreenSample.ColorPickerScreen);
+        ColorPickerScreen screen = UIManager.Singeleton.OpenAndReturnScreen<ColorPickerScreen>(ScreenSample.ColorPickerScreen);
         screen.Init(_BackGroundGridController.Get_LineColor(), OnLineColorChanged);
     }
 

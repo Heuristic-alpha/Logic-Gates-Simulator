@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Singeleton.CreateScreen(HSCL.ScreenSample.GamePlayScreen);
+        UIManager.Singeleton.OpenScreen(HSCL.ScreenSample.GamePlayScreen);
     }
 
     // Unity Other Events: /////////////////////////////////////////////////////

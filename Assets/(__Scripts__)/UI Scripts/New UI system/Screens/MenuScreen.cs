@@ -31,8 +31,13 @@ public class MenuScreen : WindowScreenBase
         _backPanelImage = backPanel.GetComponent<Image>();
         _screenSample = HSCL.ScreenSample.MenuScreen;
         appVerText.text = $"Version \' {Application.version} \'";
+    }
+
+    public override void OnOpen()
+    {
         OpenMenu();
     }
+
     public override void OnUpdate()
     {
         if(IsInteractive && Input.GetKeyDown(KeyCode.Escape))
@@ -51,11 +56,11 @@ public class MenuScreen : WindowScreenBase
     }    
     public void OpenSettingButton()
     {
-        UIManager.Singeleton.CreateScreen(HSCL.ScreenSample.SettingScreen);
+        UIManager.Singeleton.OpenScreen(HSCL.ScreenSample.SettingScreen);
     }
     public void OpenSaveAndLoadButton()
     {
-        UIManager.Singeleton.CreateScreen(HSCL.ScreenSample.SaveLoadScreen);
+        UIManager.Singeleton.OpenScreen(HSCL.ScreenSample.SaveLoadScreen);
     }
     public void DeleteAllButton()
     {
@@ -63,11 +68,11 @@ public class MenuScreen : WindowScreenBase
     }
     public void HelpButton()
     {
-        UIManager.Singeleton.CreateScreen(HSCL.ScreenSample.HelpScreen);
+        UIManager.Singeleton.OpenScreen(HSCL.ScreenSample.HelpScreen);
     }
     public void ExitButton()
     {
-        UIManager.Singeleton.CreateScreen(HSCL.ScreenSample.ExitAppScreen);
+        UIManager.Singeleton.OpenScreen(HSCL.ScreenSample.ExitAppScreen);
     }
 
 
@@ -137,7 +142,7 @@ public class MenuScreen : WindowScreenBase
 
         SetWindowInteraction(true);
         GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
     }
 
 }

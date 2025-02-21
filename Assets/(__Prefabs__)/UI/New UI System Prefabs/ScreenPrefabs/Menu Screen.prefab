@@ -1544,6 +1544,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 420622001757448418, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 907648550185117272}
+    - target: {fileID: 420622001757448418, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 420622001757448418, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HSCL.ScreenBase, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 420622001757448418, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1785022905695479714, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
       propertyPath: m_Color.b
       value: 0.2603773
@@ -1574,11 +1590,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3110091970073743335, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CloseMenu
+      value: OnClose
       objectReference: {fileID: 0}
     - target: {fileID: 3110091970073743335, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuScreen, Assembly-CSharp
+      value: HSCL.ScreenBase, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3110091970073743335, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1907,7 +1923,7 @@ MonoBehaviour:
   menuPanel: {fileID: 9081641446515715094}
   backPanel: {fileID: 3233665609415841072}
   appVerText: {fileID: 7139182001471212566}
-  menuPanelMoveSpeed: 1500
+  menuPanelMoveSpeed: 2000
   exitMenuPanel_normalColor: {r: 0, g: 0, b: 0, a: 0}
   exitMenuPanel_highLightColor: {r: 0, g: 0, b: 0, a: 0.84705883}
 --- !u!1 &8885546848066658479 stripped

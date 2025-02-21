@@ -39,7 +39,7 @@ public class SaveFileItem : MonoBehaviour
 
     public void OnClickButton()
     {
-        SaveLoadInfoScreen infoScreen = UIManager.Singeleton.CreateAndReturnScreen<SaveLoadInfoScreen>(ScreenSample.SaveLoadInfoScreen);
+        SaveLoadInfoScreen infoScreen = UIManager.Singeleton.OpenAndReturnScreen<SaveLoadInfoScreen>(ScreenSample.SaveLoadInfoScreen);
         infoScreen.InitPanel(Path, fileName, dateTime, true);
     }
     // C# Private Methods: /////////////////////////////////////////////////////

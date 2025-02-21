@@ -17,6 +17,6 @@ public class ExitWindowScreen : WindowScreenBase
 
     public void OnClick_CancelButton()
     {
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
     }
 }

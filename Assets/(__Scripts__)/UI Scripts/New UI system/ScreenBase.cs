@@ -34,12 +34,25 @@ namespace HSCL
         {
             //Debug.Log($"ScreenBase of type {gameObject.name} has Created.");
         }
-        public virtual void OnDestroyByUIManager()
+        public virtual void OnClosedByUIManager(bool cashed)
         {
-            Destroy(gameObject);
-            //Debug.Log($"ScreenBase of type {gameObject.name} has Destroyed.");
-
+            if (cashed)
+            {
+                gameObject.SetActive(false);
+                //Debug.Log($"ScreenBase of type {gameObject.name} has DeActived.");
+            }
+            else
+            {
+                Destroy(gameObject);
+                //Debug.Log($"ScreenBase of type {gameObject.name} has Destroyed.");
+            }
         }
+
+        public virtual void OnOpen()
+        {
+
+        }       
+
         public virtual void OnFocus()
         {
             _isFocused = true;
@@ -55,8 +68,8 @@ namespace HSCL
         public virtual void OnUpdate()
         {
 
-        }     
-        
+        }    
+               
         public void SetSortingLayerOfCanvas(int index)
         {
             _canvas.sortingOrder = index;

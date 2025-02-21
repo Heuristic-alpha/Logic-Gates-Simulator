@@ -745,6 +745,7 @@ MonoBehaviour:
   - {fileID: 1882099155342329363, guid: 073513512531a1740944de913edddc76, type: 3}
   - {fileID: 8496457757021605147, guid: fd903688a3d87dd40af80ea19e8586cd, type: 3}
   - {fileID: 4341683917443126615, guid: d6919bb53c4231b4fb00b7845b7ac952, type: 3}
+  _cashMode: 0
 --- !u!4 &1099705827
 Transform:
   m_ObjectHideFlags: 0

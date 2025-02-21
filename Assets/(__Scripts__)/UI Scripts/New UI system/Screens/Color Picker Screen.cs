@@ -44,7 +44,7 @@ public class ColorPickerScreen : WindowScreenBase
         float V_Value = _V_Slider.value;
 
         OnColorChange?.Invoke(Color.HSVToRGB(H_Value, S_Value, V_Value));
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
     }
 
     public void Init(Color importedColor, Action<Color> onColorChangedSubscribedMethod)

@@ -13,19 +13,19 @@ public class GamePlayScreen : ScreenBase
         base.OnCreate();
         _screenSample = ScreenSample.GamePlayScreen;
     }
-
+  
     public override void OnUpdate()
     {
         base.OnUpdate();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UIManager.Singeleton.CreateScreen(ScreenSample.ExitAppScreen);
+            UIManager.Singeleton.OpenScreen(ScreenSample.ExitAppScreen);
         }
     }
 
     public void OnClickOpenMenuButton()
     {
-        UIManager.Singeleton.CreateScreen(ScreenSample.MenuScreen);
+        UIManager.Singeleton.OpenScreen(ScreenSample.MenuScreen);
     }
 
     public void Set_FPScounterobjectEnabled(bool enable) => FPS_counter_object.SetActive(enable);

@@ -13,8 +13,25 @@ public class WindowScreenBase : HSCL.ScreenBase
         base.OnCreate();
         _screenSample = HSCL.ScreenSample.WindowScreenBase;
         SetWindowInteraction(true);
-        GameManager.Instance.Enable_MoveCameraWithKeyboard(false);
         windowPanelLastWorldPos = _windowPanel.transform.position;
+    }
+
+    public override void OnFocus()
+    {
+        base.OnFocus();
+        GameManager.Instance.Enable_MoveCameraWithKeyboard(false);
+    }
+    public override void OnFocusLost()
+    {
+        base.OnFocusLost();
+        GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
+    }
+
+    public override void OnClosedByUIManager(bool cashed)
+    {
+        base.OnClosedByUIManager(cashed);
+        windowPanelLastWorldPos = Vector3.zero;
+        _windowPanel.transform.localPosition = Vector3.zero;
     }
 
     public override void OnUpdate()
@@ -22,7 +39,7 @@ public class WindowScreenBase : HSCL.ScreenBase
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
-            UIManager.Singeleton.DestroyTheFrontScreen();
+            UIManager.Singeleton.CloseTheFrontScreen();
         }
 
         if(pointerIsMoved && _dragableWindow)
@@ -41,7 +58,7 @@ public class WindowScreenBase : HSCL.ScreenBase
     public virtual void OnClickCloseWindowButton()
     {
         GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
     }
 
 
@@ -85,5 +102,5 @@ public class WindowScreenBase : HSCL.ScreenBase
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform, screenPos, _canvas.worldCamera, out pos);
         return _canvas.transform.TransformPoint(pos);
     }
-
+   
 }

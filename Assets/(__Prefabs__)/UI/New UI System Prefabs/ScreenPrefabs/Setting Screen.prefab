@@ -4957,6 +4957,7 @@ MonoBehaviour:
   _blockInteractionPanel: {fileID: 5676552270149188216}
   _windowPanel: {fileID: 5440523406225159873}
   _dragableWindow: 1
+  _gridUIPanelControler: {fileID: 7353524894336917082}
 --- !u!224 &1622347200050122829 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7279242426631393012, guid: 1cb530f8325da7c43a69c185f0344e3c, type: 3}

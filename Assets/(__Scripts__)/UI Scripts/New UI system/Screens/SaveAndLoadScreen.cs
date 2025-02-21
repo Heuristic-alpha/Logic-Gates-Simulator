@@ -23,17 +23,21 @@ public class SaveAndLoadPanelScreen : WindowScreenBase
     {
         base.OnCreate();
         _screenSample = HSCL.ScreenSample.SaveLoadScreen;
+        
+    }
+    public override void OnOpen()
+    {
         _autoSaveTempToggle.isOn = Save_Load_System.Singeleton.TempSave;
         BrowseInSaveFolderAndGenerateSaveFileItems();
     }
-  
+
     public void OnAutoSaveTempToggleClicked()
     {
         Save_Load_System.Singeleton.TempSave = _autoSaveTempToggle.isOn;
     }
     public void OnClickedOn_CreateNewSave_Button()
     {
-        SaveLoadInfoScreen screen = UIManager.Singeleton.CreateAndReturnScreen<SaveLoadInfoScreen>(ScreenSample.SaveLoadInfoScreen);
+        SaveLoadInfoScreen screen = UIManager.Singeleton.OpenAndReturnScreen<SaveLoadInfoScreen>(ScreenSample.SaveLoadInfoScreen);
         screen.InitPanel(string.Empty, string.Empty, string.Empty, false);
     }
     public void RefreshFileItems()
@@ -65,7 +69,7 @@ public class SaveAndLoadPanelScreen : WindowScreenBase
         }
         for (int i = 0; i < children.Length; i++)
         {
-            Destroy(children[i]);
+            DestroyImmediate(children[i]);
         }
     }
 

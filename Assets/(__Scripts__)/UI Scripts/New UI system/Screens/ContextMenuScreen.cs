@@ -61,7 +61,7 @@ public class ContextMenuScreen : HSCL.ScreenBase
     }
     public void PressExit_Button()
     {
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
 
         // enable keyboard camera movement:
         GameManager.Instance.Enable_MoveCameraWithKeyboard(true);

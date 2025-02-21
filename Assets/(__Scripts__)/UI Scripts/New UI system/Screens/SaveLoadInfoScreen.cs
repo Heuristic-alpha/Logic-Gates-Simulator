@@ -41,7 +41,12 @@ public class SaveLoadInfoScreen : WindowScreenBase
     {
         base.OnCreate();
         _screenSample = HSCL.ScreenSample.SaveLoadInfoScreen;
-        if(!UIManager.Singeleton.TryGetScreen<SaveAndLoadPanelScreen>(ScreenSample.SaveLoadScreen, out _saveLoadScreen))
+        
+    }
+
+    public override void OnOpen()
+    {
+        if (!UIManager.Singeleton.TryGetScreen<SaveAndLoadPanelScreen>(ScreenSample.SaveLoadScreen, out _saveLoadScreen))
         {
             Debug.LogError("SaveLoadInfoScreen : SaveAndLoadPanelScreen is not found! ");
         }
@@ -74,7 +79,6 @@ public class SaveLoadInfoScreen : WindowScreenBase
     public override void OnClickCloseWindowButton()
     {
         base.OnClickCloseWindowButton();
-        _saveLoadScreen.RefreshFileItems();
     }
     
     public void OnPressSaveButton()
@@ -95,7 +99,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
         OnClickCloseWindowButton();
 
         //close Save & Load Screen:
-        UIManager.Singeleton.DestroyTheFrontScreen();
+        UIManager.Singeleton.CloseTheFrontScreen();
     }
     public void OnPressDeleteButton()
     {

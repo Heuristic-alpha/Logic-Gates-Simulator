@@ -80,7 +80,7 @@ public class ContextMenuManager : MonoBehaviour
     }
     private void ShowContextMenu(GameObject go, Vector3 screenPos)
     {
-        ContextMenuScreen contextMenuScreen = UIManager.Singeleton.CreateAndReturnScreen<ContextMenuScreen>(HSCL.ScreenSample.ContextMenuScreen);
+        ContextMenuScreen contextMenuScreen = UIManager.Singeleton.OpenAndReturnScreen<ContextMenuScreen>(HSCL.ScreenSample.ContextMenuScreen);
         contextMenuScreen.Init(go, screenPos, cam);     
     }
     private void TouchInput()
