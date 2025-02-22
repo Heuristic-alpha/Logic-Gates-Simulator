@@ -27,7 +27,12 @@ public class SaveAndLoadPanelScreen : WindowScreenBase
     }
     public override void OnOpen()
     {
+        base.OnOpen();
         _autoSaveTempToggle.isOn = Save_Load_System.Singeleton.TempSave;
+    }
+    public override void OnFocus()
+    {
+        base.OnFocus();
         BrowseInSaveFolderAndGenerateSaveFileItems();
     }
 

@@ -11,27 +11,40 @@ public class WindowScreenBase : HSCL.ScreenBase
     public override void OnCreate()
     {
         base.OnCreate();
-        _screenSample = HSCL.ScreenSample.WindowScreenBase;
-        SetWindowInteraction(true);
+        _screenSample = HSCL.ScreenSample.WindowScreenBase;       
+    }
+
+    public override void OnOpen()
+    {
+        base.OnOpen();
         windowPanelLastWorldPos = _windowPanel.transform.position;
     }
 
     public override void OnFocus()
     {
         base.OnFocus();
+        SetWindowInteraction(true);
         GameManager.Instance.Enable_MoveCameraWithKeyboard(false);
     }
     public override void OnFocusLost()
     {
         base.OnFocusLost();
+        SetWindowInteraction(false);
         GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
     }
 
     public override void OnClosedByUIManager(bool cashed)
     {
         base.OnClosedByUIManager(cashed);
-        windowPanelLastWorldPos = Vector3.zero;
-        _windowPanel.transform.localPosition = Vector3.zero;
+        if (cashed)
+        {
+            // reset all value:
+            windowPanelLastWorldPos = Vector3.zero;
+            _windowPanel.transform.localPosition = Vector3.zero;
+            clickStartPos = Vector2.zero;
+            clickEndPos = Vector2.zero;
+            pointerIsMoved = false;
+        }
     }
 
     public override void OnUpdate()
@@ -89,6 +102,12 @@ public class WindowScreenBase : HSCL.ScreenBase
         clickEndPos = GetPositionToElementInWorld(Input.mousePosition);
         Vector3 delta = clickEndPos - clickStartPos;
         _windowPanel.transform.position = windowPanelLastWorldPos + delta;
+
+        // fix some problem with random z value:
+        Vector3 localPos = _windowPanel.transform.localPosition;
+        localPos.z = 0;
+        _windowPanel.transform.localPosition = localPos;
+
     }   
     private Vector2 GetPositionToElementInCanvas(Vector3 screenPos)
     {

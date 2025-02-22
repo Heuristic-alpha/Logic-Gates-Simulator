@@ -46,6 +46,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
 
     public override void OnOpen()
     {
+        base.OnOpen();
         if (!UIManager.Singeleton.TryGetScreen<SaveAndLoadPanelScreen>(ScreenSample.SaveLoadScreen, out _saveLoadScreen))
         {
             Debug.LogError("SaveLoadInfoScreen : SaveAndLoadPanelScreen is not found! ");
