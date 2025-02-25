@@ -30,7 +30,7 @@ public class StartSceneManager : MonoBehaviour
         _appNameLogoText = _AppNameLogo.GetComponent<TextMeshProUGUI>();
         _appNameDefaultPosY = _AppNameLogo.transform.localPosition.y;
         _logoDefaultCharSpacing = _appNameLogoText.characterSpacing;
-        _versionText.text = $"Version <color=\"orange\">\'{Application.version}\'</color=\"orange\">";
+        _versionText.text = $"Version <b><color=\"orange\">\'{Application.version}\'</color=\"orange\"></b>";
     }
 
     private void Update()
@@ -54,16 +54,16 @@ public class StartSceneManager : MonoBehaviour
         StartCoroutine(LoadMainScene());
     }
     public void OnEndSignalEvent()
-        {
+    {
         _introObject.SetActive(false);
         _menuObject.SetActive(true);
-        }
+    }
 
     public void OnClickStartButton()
-        {
+    {
         if (!_mainSceneIsLoaded) return;
         _mainSceneLoadOperation.allowSceneActivation = true;
-        }
+    }
     public void OnClickExitButton()
     {
         Application.Quit();
@@ -76,12 +76,13 @@ public class StartSceneManager : MonoBehaviour
         _mainSceneLoadOperation = SceneManager.LoadSceneAsync(_mainSceneName, LoadSceneMode.Single);
         _mainSceneLoadOperation.allowSceneActivation = false;
 
-        while (_mainSceneLoadOperation.isDone)
+        while (_mainSceneLoadOperation.progress < 0.9f)
         {
-            yield return null;
-
+            yield return null;      
+           // Debug.LogWarning($"Current Loading Time: {Time.timeSinceLevelLoad} --- Main Scene Load Progress: {_mainSceneLoadOperation.progress}");
         }
         _mainSceneIsLoaded = true;
     }
+
 
 } // end of class
