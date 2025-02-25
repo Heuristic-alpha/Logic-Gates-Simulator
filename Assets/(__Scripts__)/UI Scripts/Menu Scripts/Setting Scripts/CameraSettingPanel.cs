@@ -21,6 +21,8 @@ public class CameraSettingPanel : MonoBehaviour
     float cameraSizeValueBeforeSliderInit = -1;
     [SerializeField] float cameraZoomAmountChangeOnZoomButtonClicked = 0.5f;
 
+    private bool _cameraSizeSliderIsInit;
+
     // Unity Main Events: //////////////////////////////////////////////////////
     private void Awake()
     {
@@ -38,6 +40,12 @@ public class CameraSettingPanel : MonoBehaviour
         yield return new WaitForEndOfFrame();
         Init_cameraSizeSlider();
         cameraSizeSlider.value = cameraSizeValueBeforeSliderInit;
+    }
+
+    private void OnEnable()
+    {
+        // update slider value each time object enabled:
+        if (_cameraSizeSliderIsInit) cameraSizeSlider.value = cameraController.CameraCurrentSize;
     }
 
     // C# Public Methods: //////////////////////////////////////////////////////
@@ -83,7 +91,9 @@ public class CameraSettingPanel : MonoBehaviour
         cameraSizeSlider.value = t;
 
         cameraSizeSlider.maxValue = cameraController.CameraMaxSize;
-        cameraSizeSlider.minValue = cameraController.CameraMinSize;     
+        cameraSizeSlider.minValue = cameraController.CameraMinSize; 
+        
+        _cameraSizeSliderIsInit = true;
     }
 
 

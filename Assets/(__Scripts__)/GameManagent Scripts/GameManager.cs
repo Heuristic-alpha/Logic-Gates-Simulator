@@ -62,8 +62,9 @@ public class GameManager : MonoBehaviour
     {
 
 #if UNITY_ANDROID || UNITY_IOS
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
-#else 
+        //Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+#else
         Application.targetFrameRate = -1;
 #endif
 

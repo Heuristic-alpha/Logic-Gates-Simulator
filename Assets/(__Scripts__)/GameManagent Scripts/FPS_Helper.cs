@@ -19,7 +19,8 @@ public static class FPS_Helper
     {
 
 #if UNITY_ANDROID
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+       // Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
 #else 
         Application.targetFrameRate = -1;
 #endif
