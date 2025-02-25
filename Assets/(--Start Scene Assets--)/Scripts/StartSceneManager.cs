@@ -54,16 +54,16 @@ public class StartSceneManager : MonoBehaviour
         StartCoroutine(LoadMainScene());
     }
     public void OnEndSignalEvent()
-    {
+        {
         _introObject.SetActive(false);
         _menuObject.SetActive(true);
-    }
+        }
 
     public void OnClickStartButton()
-    {
+        {
         if (!_mainSceneIsLoaded) return;
         _mainSceneLoadOperation.allowSceneActivation = true;
-    }
+        }
     public void OnClickExitButton()
     {
         Application.Quit();
