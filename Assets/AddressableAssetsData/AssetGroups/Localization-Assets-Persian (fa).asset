@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Persian (fa)
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Persian (fa)
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 48fb40edfa8ef3d438ba2ab9dfccb368
+  m_SerializeEntries:
+  - m_GUID: 054545938b1e41040b7c7d53ce4408e7
+    m_Address: Yekan Black for Headers
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fa
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 357a220860c8fb94da89d881cc0f4a27
+    m_Address: Yekan White
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fa
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f02449aa6e0677c439a9807f3f16d7af
+    m_Address: Yekan Black
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fa
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe6db3e8aa8d4be4f974fcddbdcbf9bd
+    m_Address: Yekan White for Settings
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fa
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 20b0702637e50034a8b3350e8c0d75eb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e7793c81e37f06f4c934f796009bd6d8, type: 2}
+    - {fileID: 11400000, guid: 8d3102ff28f1d0a46b712cbf2055306c, type: 2}

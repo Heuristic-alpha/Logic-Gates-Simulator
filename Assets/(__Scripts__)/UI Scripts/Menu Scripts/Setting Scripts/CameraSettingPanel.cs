@@ -38,6 +38,7 @@ public class CameraSettingPanel : MonoBehaviour
 
         // for some reason cameraSlider should be initlize after some time. there for it will broken:
         yield return new WaitForEndOfFrame();
+        yield return null;
         Init_cameraSizeSlider();
         cameraSizeSlider.value = cameraSizeValueBeforeSliderInit;
     }

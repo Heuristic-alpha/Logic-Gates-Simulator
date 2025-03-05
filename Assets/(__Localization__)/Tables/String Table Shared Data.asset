@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: String Table Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: String Table
+  m_TableCollectionNameGuidString: 2ca2d476f0358bf41ad2e68bb6f07596
+  m_Entries:
+  - m_Id: 122469056512
+    m_Key: Inputs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236424101888
+    m_Key: Outputs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 438988013568
+    m_Key: Simple Gates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 666017300480
+    m_Key: Chips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704978850144256
+    m_Key: ContextMenu_Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 706814038499328
+    m_Key: ContextMenu_Rotate +90
+    m_Metadata:
+      m_Items: []
+  - m_Id: 707186891153408
+    m_Key: ContextMenu_Rotate -90
+    m_Metadata:
+      m_Items: []
+  - m_Id: 724839689084928
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 948965339029504
+    m_Key: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 949103180636160
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 949206326960128
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 949454961106944
+    m_Key: Save & Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 951089804337152
+    m_Key: Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 951290552115200
+    m_Key: Color Picker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 959502894489600
+    m_Key: Delete All Objects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 964033271291904
+    m_Key: Logic Gates Simulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 967017636028416
+    m_Key: Screen Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 967254119276544
+    m_Key: Screen Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 968131601227776
+    m_Key: Camera Size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 968440935342080
+    m_Key: Change Background Base Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 968734939275264
+    m_Key: Change Background Line Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 969342375157760
+    m_Key: Show Screen Position
+    m_Metadata:
+      m_Items: []
+  - m_Id: 969850624139264
+    m_Key: Placement in order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 970718467579904
+    m_Key: Show FPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1737869826711552
+    m_Key: Create New
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738186718961664
+    m_Key: Auto Temp Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1741530481025024
+    m_Key: Set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1749534467153920
+    m_Key: Do you want to exit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1749816567652352
+    m_Key: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1749892467777536
+    m_Key: No
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 701766142610898975
+  references:
+    version: 2
+    RefIds:
+    - rid: 701766142610898975
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1740751618927

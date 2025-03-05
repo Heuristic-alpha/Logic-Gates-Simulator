@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class StartSceneManager : MonoBehaviour
 {
@@ -10,18 +11,24 @@ public class StartSceneManager : MonoBehaviour
     [SerializeField] private GameObject _introObject;
     [SerializeField] private GameObject _menuObject;
     [SerializeField] private GameObject _AppNameLogo;
+    [SerializeField] private GameObject _menuBackGroundImageObject;
 
     // Unity Components: ///////////////////////////////////////////////////////
     [SerializeField] private TextMeshProUGUI _versionText;
+    UnityEngine.UI.Image _menuBackGroundImage;
 
     // C# Properties: //////////////////////////////////////////////////////////
     // C# Fields: //////////////////////////////////////////////////////////////
-    [SerializeField] private string _mainSceneName;
+    [SerializeField] Color _firstColor;
+    [SerializeField] Color _secondColor;
+    [SerializeField, Range(1, 10)] int colorChangingSpeed;
+    [SerializeField] string _mainSceneName;
     private AsyncOperation _mainSceneLoadOperation;
     private bool _mainSceneIsLoaded;
     private float _appNameDefaultPosY;
     private TMP_Text _appNameLogoText;
     private float _logoDefaultCharSpacing;
+
 
     // Unity Main Events: //////////////////////////////////////////////////////
     private void Awake()
@@ -31,6 +38,7 @@ public class StartSceneManager : MonoBehaviour
         _appNameDefaultPosY = _AppNameLogo.transform.localPosition.y;
         _logoDefaultCharSpacing = _appNameLogoText.characterSpacing;
         _versionText.text = $"Version <b><color=\"orange\">\'{Application.version}\'</color=\"orange\"></b>";
+        _menuBackGroundImage = _menuBackGroundImageObject.GetComponent<UnityEngine.UI.Image>();
     }
 
     private void Update()
@@ -41,8 +49,10 @@ public class StartSceneManager : MonoBehaviour
         _AppNameLogo.transform.localPosition = newSize;
 
         //change charcter spacing of logo:
-        float newVal = _logoDefaultCharSpacing + Mathf.Sin(Time.realtimeSinceStartup);
+        float newVal = _logoDefaultCharSpacing + 6 * Mathf.Sin(Time.realtimeSinceStartup);
         _appNameLogoText.characterSpacing = newVal;
+
+        ChangeMenuBackGroundImage();
     }
     // Unity Other Events: /////////////////////////////////////////////////////
     // C# Public Methods: //////////////////////////////////////////////////////
@@ -82,6 +92,25 @@ public class StartSceneManager : MonoBehaviour
            // Debug.LogWarning($"Current Loading Time: {Time.timeSinceLevelLoad} --- Main Scene Load Progress: {_mainSceneLoadOperation.progress}");
         }
         _mainSceneIsLoaded = true;
+    }
+
+    float colorTime;
+    int colorIncreamentDir = 1;
+    private void ChangeMenuBackGroundImage()
+    {
+        _menuBackGroundImage.color = Color.Lerp(_firstColor, _secondColor, colorTime);
+
+        colorTime += Time.deltaTime * colorIncreamentDir * colorChangingSpeed / 10;
+        if (colorTime > 1)
+        {
+            colorTime = 1;
+            colorIncreamentDir = -1;
+        }
+        else if (colorTime < 0)
+        {
+            colorTime = 0;
+            colorIncreamentDir = 1;
+        }
     }
 
 

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97269afb30aa84742ae3f3342603618a, type: 3}
+  m_Name: TMP Font Table_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b92f86555a22b0e48bd800dfb75be578, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 60271091712
+    m_Localized: ab7b0c31b81d4174fbf707b486708859
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6292679680000
+    m_Localized: 126123f72970fde4d94b3b0527aecd0a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7235022348288
+    m_Localized: e8db20e10ed21384fb0784f95305056c
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9278520811520
+    m_Localized: 9ce58b74bb3cafc4692073725798e7fb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10129557676032
+    m_Localized: d26ddb4255929674688315edad97584d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 769766816997376
+    m_Localized: 302cb078457f87a4f9043cee8a21c6f6
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
