@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using HSCL;
+using System.Collections;
 
 public class ContextMenuScreen : HSCL.ScreenBase
 {
@@ -10,6 +11,8 @@ public class ContextMenuScreen : HSCL.ScreenBase
     Camera _camera;
     [SerializeField] GameObject contextMenuObject;
     [SerializeField] TMP_Text headerText;
+    [SerializeField] Image rotateImageUp;
+    [SerializeField] Image rotateImageDown;
 
     public override void OnCreate()
     {
@@ -23,6 +26,17 @@ public class ContextMenuScreen : HSCL.ScreenBase
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PressExit_Button();
+        }
+    }
+
+    public override void OnClosedByUIManager(bool cashed)
+    {
+        base.OnClosedByUIManager(cashed);
+        // reset arrow color to normal because they dont turn back in normal (this happen in cashed mode):
+        if (cashed)
+        {
+            rotateImageDown.color = Color.black;
+            rotateImageUp.color = Color.black;
         }
     }
 
@@ -61,8 +75,8 @@ public class ContextMenuScreen : HSCL.ScreenBase
     }
     public void PressExit_Button()
     {
-        UIManager.Singeleton.CloseTheFrontScreen();
-
+        UIManager.Singeleton.CloseTheFrontScreen(); 
+        
         // enable keyboard camera movement:
         GameManager.Instance.Enable_MoveCameraWithKeyboard(true);
     }
@@ -118,4 +132,5 @@ public class ContextMenuScreen : HSCL.ScreenBase
 
         return _canvas.transform.TransformPoint(returnPos);
     }
+
 }

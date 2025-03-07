@@ -16,7 +16,7 @@ public class LangSellectorScript : MonoBehaviour
     // C# Properties: //////////////////////////////////////////////////////////
     // C# Fields: //////////////////////////////////////////////////////////////
     List<Locale> _locales;
-
+    bool _isInit = false;
     // Unity Main Events: //////////////////////////////////////////////////////
     private IEnumerator Start()
     {
@@ -27,6 +27,8 @@ public class LangSellectorScript : MonoBehaviour
     private void OnEnable()
     {
         LocalizationSettings.SelectedLocaleChanged += OnLocaleCganged;
+
+        if(_isInit) UpdateSellectorOption(LocalizationSettings.SelectedLocale);
     }
     private void OnDisable()
     {
@@ -57,6 +59,7 @@ public class LangSellectorScript : MonoBehaviour
         }
         _dropdown.options = options;
         _dropdown.value = sellected;
+        _isInit = true;
     }
 
     private void UpdateSellectorOption(Locale locale)

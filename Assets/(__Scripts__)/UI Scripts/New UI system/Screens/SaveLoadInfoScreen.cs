@@ -1,10 +1,10 @@
-using HSCL;
+﻿using HSCL;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class SaveLoadInfoScreen : WindowScreenBase
@@ -19,21 +19,30 @@ public class SaveLoadInfoScreen : WindowScreenBase
     [SerializeField] private TMP_Text _panelNameTXT;
     [SerializeField] private TMP_InputField _saveNameTXT;
     [SerializeField] private TMP_Text _dateTimeTXT;
+    [SerializeField] private TMP_FontAsset _EN_font;
+    [SerializeField] private TMP_FontAsset _FA_font;
 
     private SaveAndLoadPanelScreen _saveLoadScreen;
 
     // C# Properties: //////////////////////////////////////////////////////////
     // C# Fields: //////////////////////////////////////////////////////////////
-    private const string SAVE_INFO = "Save info";
-    private const string NEW_SAVE = "New save";
+    private const string SAVE_INFO_EN = "Save info";
+    private const string NEW_SAVE_EN = "New save";
+    private const string SAVE_INFO_FA = "اطلاعات ذخیره شده";
+    private const string NEW_SAVE_FA = "ایجاد ذخیره جدید";
     private string _newSaveName = "";
     private char[] _RANDOM_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-    private char[] _forbiden_Chars = { '<', '/', '>', '!' ,'\\'};
+    private char[] _forbiden_Chars = { '<', '/', '>', '!', '\\' };
     private bool _isInInfoMode;
 
     private string _saveFilePath;
 
-    // Unity Main Events: //////////////////////////////////////////////////////   
+    // Unity Main Events: //////////////////////////////////////////////////////
+    private void Start()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
     // Unity Other Events: /////////////////////////////////////////////////////
 
     // C# Public Methods: //////////////////////////////////////////////////////
@@ -41,7 +50,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
     {
         base.OnCreate();
         _screenSample = HSCL.ScreenSample.SaveLoadInfoScreen;
-        
+
     }
 
     public override void OnOpen()
@@ -62,7 +71,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
             _saveButton.interactable = true;
             _loadButton.interactable = true;
             _deleteButton.interactable = true;
-            _panelNameTXT.text = SAVE_INFO;
+            _panelNameTXT.text = SAVE_INFO_EN;
             _saveNameTXT.text = fileName;
             _lastEditDateTimeGameObject.SetActive(true);
             _dateTimeTXT.text = dateTime;
@@ -72,16 +81,18 @@ public class SaveLoadInfoScreen : WindowScreenBase
             _saveButton.interactable = true;
             _loadButton.interactable = false;
             _deleteButton.interactable = false;
-            _panelNameTXT.text = NEW_SAVE;
+            _panelNameTXT.text = NEW_SAVE_EN;
             _lastEditDateTimeGameObject.SetActive(false);
             _saveNameTXT.text = _newSaveName;
         }
+        // update window header:
+        OnLocaleChanged(LocalizationSettings.SelectedLocale);
     }
     public override void OnClickCloseWindowButton()
     {
         base.OnClickCloseWindowButton();
     }
-    
+
     public void OnPressSaveButton()
     {
         if (_isInInfoMode)
@@ -116,15 +127,15 @@ public class SaveLoadInfoScreen : WindowScreenBase
         if (length < 1) return;
 
         char lastChar = content[length - 1];
-        foreach(char forbidChar in _forbiden_Chars)
+        foreach (char forbidChar in _forbiden_Chars)
         {
-            if(forbidChar == lastChar)
+            if (forbidChar == lastChar)
             {
                 _saveNameTXT.text = content.Substring(0, length - 1);
                 break;
             }
         }
-    
+
     }
 
     // C# Private Methods: /////////////////////////////////////////////////////
@@ -141,4 +152,34 @@ public class SaveLoadInfoScreen : WindowScreenBase
         return $"({_saveNameTXT.text})_{random_sb.ToString()}{DateTime.Now.Ticks.ToString()}";
     }
 
+    private void OnLocaleChanged(Locale locale)
+    {
+        var locales = LocalizationSettings.AvailableLocales.Locales;
+        if (_isInInfoMode)
+        {
+            if (locale == locales[0]) // en
+            {
+                _panelNameTXT.text = SAVE_INFO_EN;
+                _panelNameTXT.font = _EN_font;
+            }
+            else if (locale == locales[1]) // fa
+            {
+                _panelNameTXT.text = SAVE_INFO_FA;
+                _panelNameTXT.font = _FA_font;
+            }
+        }
+        else // new save mode
+        {
+            if (locale == locales[0]) // en
+            {
+                _panelNameTXT.text = NEW_SAVE_EN;
+                _panelNameTXT.font = _EN_font;
+            }
+            else if (locale == locales[1]) // fa
+            {
+                _panelNameTXT.text = NEW_SAVE_FA;
+                _panelNameTXT.font = _FA_font;
+            }
+        }
+    }
 }

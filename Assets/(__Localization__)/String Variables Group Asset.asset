@@ -23,7 +23,7 @@ MonoBehaviour:
       type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
         m_TableReference:
-          m_TableCollectionName: 
+          m_TableCollectionName: GUID:2ca2d476f0358bf41ad2e68bb6f07596
         m_TableEntryReference:
           m_KeyId: 0
           m_Key: 

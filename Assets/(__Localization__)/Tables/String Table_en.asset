@@ -138,6 +138,22 @@ MonoBehaviour:
     m_Localized: No
     m_Metadata:
       m_Items: []
+  - m_Id: 2051528851447808
+    m_Localized: Last Edit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2052007069212672
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2052134274064384
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2052257381081088
+    m_Localized: Delete
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -671,9 +671,11 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration:
     Android: 1
+    Standalone: 1
   managedStrippingLevel:
     Android: 3
     Standalone: 3

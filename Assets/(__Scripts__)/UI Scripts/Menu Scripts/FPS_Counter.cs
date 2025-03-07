@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class FPS_Counter : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class FPS_Counter : MonoBehaviour
     // Unity Components: ///////////////////////////////////////////////////////
     // C# Properties: //////////////////////////////////////////////////////////
     // C# Fields: //////////////////////////////////////////////////////////////
-    [SerializeField] Text FPS_Text;
+    [SerializeField] TMP_Text FPS_Text;
 
     private int currentFPS;
     private float lastTime;

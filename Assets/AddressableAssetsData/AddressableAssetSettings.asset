@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: d3f2eea82d1587840ad8386af385bee6
   m_currentHash:
     serializedVersion: 2
-    Hash: 324efe3fb35498ca50057c3303fd7078
+    Hash: e43a2041b03d1692991d5dc752eb6ca5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   m_NonRecursiveBuilding: 1
   m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 3
-  m_ContiguousBundles: 1
+  m_ContiguousBundles: 0
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
   m_ShaderBundleNaming: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: b73b068706f8b124399b2db88ea39c38, type: 2}
+  - {fileID: 11400000, guid: 20a1d54ad4180664abbc4b068fab6e06, type: 2}
   - {fileID: 11400000, guid: ad52d136271691a45845d5f07343cf8f, type: 2}
   - {fileID: 11400000, guid: 6b52ebb595dc7ab4fafa4491e6847f51, type: 2}
   - {fileID: 11400000, guid: 2b9771a557937e543ad2160addb95d71, type: 2}
@@ -102,6 +103,7 @@ MonoBehaviour:
     - Locale-fa-IR
     - Locale-ar
     - Locale-fa
+    - Preload
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 25fcc2c76066d524b96adb5ca2dcc832, type: 2}

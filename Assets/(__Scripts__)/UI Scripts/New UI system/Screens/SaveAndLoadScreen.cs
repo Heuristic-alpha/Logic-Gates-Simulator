@@ -1,7 +1,4 @@
 using HSCL;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +20,7 @@ public class SaveAndLoadPanelScreen : WindowScreenBase
     {
         base.OnCreate();
         _screenSample = HSCL.ScreenSample.SaveLoadScreen;
-        
+
     }
     public override void OnOpen()
     {

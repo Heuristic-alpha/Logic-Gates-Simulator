@@ -242,7 +242,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
+  m_overrideHtmlColors: 1
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -486,6 +486,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contextMenuObject: {fileID: 700189466039147257}
   headerText: {fileID: 3329705512061963205}
+  rotateImageUp: {fileID: 1862086570660264005}
+  rotateImageDown: {fileID: 6867288585966950530}
 --- !u!1 &2525089471971640839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1206,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 1
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1127717130134227111}
+          m_TargetAssemblyTypeName: ContextMenuScreen, Assembly-CSharp
+          m_MethodName: OnPointerExitOnRotateButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 6867288585966950530}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!1 &6091746530622826137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,7 +1627,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
+  m_overrideHtmlColors: 1
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -1900,6 +1918,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 1
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1127717130134227111}
+          m_TargetAssemblyTypeName: ContextMenuScreen, Assembly-CSharp
+          m_MethodName: OnPointerExitOnRotateButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1862086570660264005}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 16
     callback:
       m_PersistentCalls:
         m_Calls:
