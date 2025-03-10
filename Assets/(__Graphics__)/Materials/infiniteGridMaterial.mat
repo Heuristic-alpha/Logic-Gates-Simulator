@@ -52,7 +52,7 @@ Material:
     - _LineThickness: 0.95
     m_Colors:
     - _BackGroundColor: {r: 0, g: 0.8037735, b: 0.6079841, a: 1}
-    - _Color1: {r: 0.1931752, g: 0, b: 0.4078431, a: 1}
-    - _Color2: {r: 0.06070795, g: 0.6648165, b: 0.4803482, a: 1}
+    - _Color1: {r: 0.2638036, g: 0.2821428, b: 0.2327679, a: 1}
+    - _Color2: {r: 0.4120483, g: 0.544733, b: 0.5713247, a: 1}
     - _LineColor: {r: 0.7612681, g: 1, b: 0.51886785, a: 1}
   m_BuildTextureStacks: []

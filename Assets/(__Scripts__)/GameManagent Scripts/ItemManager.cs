@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -188,6 +189,7 @@ public class ItemManager : MonoBehaviour
 
 } // end of class
 
+[Serializable]
 public enum Item_Rotation
 {
     n, // north

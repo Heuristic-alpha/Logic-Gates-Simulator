@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using Unity.Serialization.Json;
 
 public class Save_Load_System : MonoBehaviour
 {
@@ -66,19 +67,23 @@ public class Save_Load_System : MonoBehaviour
     public void CreateSaveFileFromName(string directoryName, string displyName)
     {
         string filePath = CreateSaveFileIfNotExistAndReturnPath(directoryName);
-        SaveData saveData = new SaveData(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
+        SaveData saveData = new SaveData();
+        saveData.Init(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
         string saveContent = saveData.ToStringContent();
         WriteToSaveFile(filePath, in saveContent);
+
     }
     public void CreateSaveFileFromPath(string filePath, string displyName)
     {
-        SaveData saveData = new SaveData(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
+        SaveData saveData = new SaveData();
+        saveData.Init(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
         string saveContent = saveData.ToStringContent();
         WriteToSaveFile(filePath, in saveContent);
     }
     public void LoadSaveFileFromPath(string path)
     {
-        SaveData saveData = new SaveData(path);
+        SaveData saveData = new SaveData();
+        saveData.Init(path);
         LoadSaveData(saveData);
     }
     public void DeleteSaveFileFromPath(string path)
@@ -192,7 +197,8 @@ public class Save_Load_System : MonoBehaviour
         if (TempSave)
         {
 #if UNITY_STANDALONE_WIN || UNITY_ANDROID
-            SaveData saveData = new SaveData("temp", _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
+            SaveData saveData = new SaveData();
+            saveData.Init("temp", _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
             string saveContent = saveData.ToStringContent();
             WriteToSaveFile(CreateTempSaveFileIfNotExistAndReturnPath(), in saveContent);
 #endif
@@ -224,7 +230,6 @@ public class Save_Load_System : MonoBehaviour
         }
         else
         {
-
             PlayerPrefs.SetInt(AUTO_SAVE, Convert.ToInt32(_tempSave));
         }
     }
@@ -240,8 +245,16 @@ public class Save_Load_System : MonoBehaviour
         Debug.Log("string end ---------- <");
     }
 
+    // Json Serialization test:
+    private void SaveTo_Json_File(SaveData saveData, string path, string fileName)
+    {    
+        string jsonString = JsonSerialization.ToJson(saveData);
+        File.WriteAllText(Path.Combine(path, fileName + ".json"), jsonString);
+    }
+
 } // end of class
 
+[Serializable]
 public readonly struct ItemInfo
 {
     public readonly int id;
@@ -282,6 +295,7 @@ public readonly struct ItemInfo
 
 }
 
+[Serializable]
 public readonly struct WireInfo
 {
     // for wire startPoint
@@ -323,6 +337,7 @@ public readonly struct WireInfo
     }
 }
 
+[Serializable]
 public readonly struct SaveInfo
 {
     public readonly string version;
@@ -365,24 +380,23 @@ public class SaveData
     public const string SPACE = " ";
     public const string NEXT_LINE = "\n";
 
-    // slightParser
-    private XmlParser parser;
+    private XmlParser parser; // slightParser
 
     // save info
-    readonly string version;
-    readonly DateTime dateTime;
-    readonly string saveDisplayName;
+    public string version;
+    public DateTime dateTime;
+    public string saveDisplayName;
     // setting:
-    readonly Vector3 cameraPostion;
+    public Vector3 cameraPostion;
     // backGroundColor:
-    readonly Color backColor;
-    readonly Color lineColor;
+    public Color backColor;
+    public Color lineColor;
     // Items:
-    ItemInfo[] itemInfos;
+    public ItemInfo[] itemInfos;
     // Wires:
-    WireInfo[] wireInfos;
+    public  WireInfo[] wireInfos;
 
-    // all properties:
+    // All properties:
     public string Version { get { return version; } }
     public DateTime DateTime { get { return dateTime; } }
     public string SaveDisplayName { get { return saveDisplayName; } }
@@ -392,6 +406,8 @@ public class SaveData
     public ItemInfo[] ItemInfos { get { return itemInfos; } }
     public WireInfo[] WireInfos { get { return wireInfos; } }
 
+    // disable prameters constructor for Serialization
+    /*
     /// <summary>
     /// Load all data from file'directory path
     /// </summary>
@@ -431,6 +447,55 @@ public class SaveData
         this.backColor = backColor;
         this.lineColor = lineColor;
         saveDisplayName = saveName;
+    }
+    */
+
+    /// <summary>
+    /// Load all data from file'directory path
+    /// </summary>
+    /// <param name="path">saveFile directory path</param>
+    public void Init(string path)
+    {
+        parser = new XmlParser(File.ReadAllText(path));
+        XmlTagInfo saveTag = parser.rootNode;
+
+        XmlTagInfo infoTag = saveTag.GetChildNode(info_TAG);
+        XmlTagInfo verTag = infoTag.GetChildNode(ver_TAG);
+        XmlTagInfo dateTimeTag = infoTag.GetChildNode(dateTime_TAG);
+        XmlTagInfo nameTag = infoTag.GetChildNode(name_TAG);
+
+        XmlTagInfo settingTag = saveTag.GetChildNode(setting_TAG);
+        XmlTagInfo cameraTag = settingTag.GetChildNode(camera_TAG);
+        XmlTagInfo backGroundColorTag = settingTag.GetChildNode(backGroundColor_TAG);
+
+        XmlTagInfo itemsTag = saveTag.GetChildNode(items_TAG);
+        XmlTagInfo[] itemTags = itemsTag.GetAllChildren();
+
+        XmlTagInfo wiresTag = saveTag.GetChildNode(wires_TAG);
+        XmlTagInfo[] wireTags = wiresTag.GetAllChildren();
+
+        version = verTag.GetContent();
+        dateTime = DateTime.Parse(dateTimeTag.GetContent(), CultureInfo.InvariantCulture);
+        saveDisplayName = nameTag.GetContent();
+
+        cameraPostion = Vector3Extension.Parse(cameraTag.GetContent());
+        Parse_backGroundColorContentTo_Colors(backGroundColorTag, out backColor, out lineColor);
+
+        itemInfos = Parse_itemsContentTo_ItemInfo(itemTags);
+        wireInfos = Parse_wireContentTo_WireInfo(wireTags);
+    }
+    public void Init(string saveName, Color backColor, Color lineColor)
+    {
+        this.backColor = backColor;
+        this.lineColor = lineColor;
+        saveDisplayName = saveName;
+    }
+
+    public SaveData() { }
+
+    public string ToStringContent()
+    {
+        return Write_GameCurrentStateTo_StringContent();
     }
 
     // parsing methods:
@@ -582,8 +647,5 @@ public class SaveData
     private string StartTag(string tagName) => $"<{tagName}>";
     private string EndTag(string tagName) => $"</{tagName}>";
 
-    public string ToStringContent()
-    {
-        return Write_GameCurrentStateTo_StringContent();
-    }
+
 }
