@@ -457,7 +457,7 @@ public class SaveData
     public void Init(string path)
     {
         parser = new XmlParser(File.ReadAllText(path));
-        XmlTagInfo saveTag = parser.rootNode;
+        XmlTagInfo saveTag = parser.RootNode;
 
         XmlTagInfo infoTag = saveTag.GetChildNode(info_TAG);
         XmlTagInfo verTag = infoTag.GetChildNode(ver_TAG);
