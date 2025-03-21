@@ -1,10 +1,11 @@
-using HSCL;
+using HSCL.XML;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using UnityEngine;
 using Unity.Serialization.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Save_Load_System : MonoBehaviour
 {
@@ -20,10 +21,11 @@ public class Save_Load_System : MonoBehaviour
 
     // C# Fields: //////////////////////////////////////////////////////////////
     [SerializeField] bool _tempSave = true;
+    public bool GeneratePrettySave = true;
 
     private string _applicationPath;
     private string _tempFolderPath;
-    private const string _logicGateSimFolder = "logicGateSim";
+    private const string _logicGateSimFolder = "logicGatesSim";
     private const string _saveFolder = "saves";
     private const string _tempFolder = "temp";
     private const string _FILE_TYPE = ".lgs";
@@ -69,16 +71,16 @@ public class Save_Load_System : MonoBehaviour
         string filePath = CreateSaveFileIfNotExistAndReturnPath(directoryName);
         SaveData saveData = new SaveData();
         saveData.Init(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
-        string saveContent = saveData.ToStringContent();
-        WriteToSaveFile(filePath, in saveContent);
+        StringBuilder saveContent = saveData.ToStringContent();
+        WriteToSaveFile(filePath, saveContent);
 
     }
     public void CreateSaveFileFromPath(string filePath, string displyName)
     {
         SaveData saveData = new SaveData();
         saveData.Init(displyName, _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
-        string saveContent = saveData.ToStringContent();
-        WriteToSaveFile(filePath, in saveContent);
+        StringBuilder saveContent = saveData.ToStringContent();
+        WriteToSaveFile(filePath, saveContent);
     }
     public void LoadSaveFileFromPath(string path)
     {
@@ -93,9 +95,11 @@ public class Save_Load_System : MonoBehaviour
     public bool GetSaveInfoFromSaveFilePath(string path, out string saveName, out string datetime)
     {
         XmlParser slightParser = new XmlParser(File.ReadAllText(path), SaveData.info_TAG);
-        if (slightParser.TryGetContentFromTag(SaveData.name_TAG, out saveName)
-        && slightParser.TryGetContentFromTag(SaveData.dateTime_TAG, out datetime))
+        XmlTagInfo infoNode;
+        if(slightParser.TryGetXMLTagInfoFromTag(SaveData.info_TAG,out infoNode))
         {
+            saveName = infoNode.GetValueOfAttribute(SaveData.name_TAG);
+            datetime = infoNode.GetValueOfAttribute(SaveData.dateTime_TAG);
             return true;
         }
         saveName = "Null";
@@ -177,9 +181,9 @@ public class Save_Load_System : MonoBehaviour
     {
         return File.ReadAllText(path);
     }
-    private void WriteToSaveFile(string path, in string content)
+    private void WriteToSaveFile(string path, StringBuilder content)
     {
-        File.WriteAllText(path, content);
+        File.WriteAllText(path, content.ToString());
     }
 
     private void LoadTempSaveFile()
@@ -199,8 +203,8 @@ public class Save_Load_System : MonoBehaviour
 #if UNITY_STANDALONE_WIN || UNITY_ANDROID
             SaveData saveData = new SaveData();
             saveData.Init("temp", _backGroundGridController.Get_BackColor(), _backGroundGridController.Get_LineColor());
-            string saveContent = saveData.ToStringContent();
-            WriteToSaveFile(CreateTempSaveFileIfNotExistAndReturnPath(), in saveContent);
+            StringBuilder saveContent = saveData.ToStringContent();
+            WriteToSaveFile(CreateTempSaveFileIfNotExistAndReturnPath(), saveContent);
 #endif
         }
     }
@@ -376,11 +380,13 @@ public class SaveData
     public const string setting_TAG = "setting";
     public const string camera_TAG = "camera";
     public const string backGroundColor_TAG = "backGroundColor";
+    public const string backGroundLineColor_TAG = "backGroundLineColor";
 
     public const string SPACE = " ";
     public const string NEXT_LINE = "\n";
 
     private XmlParser parser; // slightParser
+    private bool _prettySave;
 
     // save info
     public string version;
@@ -406,50 +412,6 @@ public class SaveData
     public ItemInfo[] ItemInfos { get { return itemInfos; } }
     public WireInfo[] WireInfos { get { return wireInfos; } }
 
-    // disable prameters constructor for Serialization
-    /*
-    /// <summary>
-    /// Load all data from file'directory path
-    /// </summary>
-    /// <param name="path">saveFile directory path</param>
-    public SaveData(string path)
-    {
-        parser = new XmlParser(File.ReadAllText(path));
-        XmlTagInfo saveTag = parser.rootNode;
-
-        XmlTagInfo infoTag = saveTag.GetChildNode(info_TAG);
-        XmlTagInfo verTag = infoTag.GetChildNode(ver_TAG);
-        XmlTagInfo dateTimeTag = infoTag.GetChildNode(dateTime_TAG);
-        XmlTagInfo nameTag = infoTag.GetChildNode(name_TAG);
-
-        XmlTagInfo settingTag = saveTag.GetChildNode(setting_TAG);
-        XmlTagInfo cameraTag = settingTag.GetChildNode(camera_TAG);
-        XmlTagInfo backGroundColorTag = settingTag.GetChildNode(backGroundColor_TAG);
-
-        XmlTagInfo itemsTag = saveTag.GetChildNode(items_TAG);
-        XmlTagInfo[] itemTags = itemsTag.GetAllChildren();
-
-        XmlTagInfo wiresTag = saveTag.GetChildNode(wires_TAG);
-        XmlTagInfo[] wireTags = wiresTag.GetAllChildren();
-
-        version = verTag.GetContent();
-        dateTime = DateTime.Parse(dateTimeTag.GetContent(), CultureInfo.InvariantCulture);
-        saveDisplayName = nameTag.GetContent();
-
-        cameraPostion = Vector3Extension.Parse(cameraTag.GetContent());
-        Parse_backGroundColorContentTo_Colors(backGroundColorTag, out backColor, out lineColor);
-
-        itemInfos = Parse_itemsContentTo_ItemInfo(itemTags);
-        wireInfos = Parse_wireContentTo_WireInfo(wireTags);
-    }
-    public SaveData(string saveName, Color backColor, Color lineColor)
-    {
-        this.backColor = backColor;
-        this.lineColor = lineColor;
-        saveDisplayName = saveName;
-    }
-    */
-
     /// <summary>
     /// Load all data from file'directory path
     /// </summary>
@@ -459,14 +421,11 @@ public class SaveData
         parser = new XmlParser(File.ReadAllText(path));
         XmlTagInfo saveTag = parser.RootNode;
 
-        XmlTagInfo infoTag = saveTag.GetChildNode(info_TAG);
-        XmlTagInfo verTag = infoTag.GetChildNode(ver_TAG);
-        XmlTagInfo dateTimeTag = infoTag.GetChildNode(dateTime_TAG);
-        XmlTagInfo nameTag = infoTag.GetChildNode(name_TAG);
-
+        XmlTagInfo infoTag = saveTag.GetChildNode(info_TAG); // infoTag is SelfClosedTag and has Attributes
         XmlTagInfo settingTag = saveTag.GetChildNode(setting_TAG);
         XmlTagInfo cameraTag = settingTag.GetChildNode(camera_TAG);
         XmlTagInfo backGroundColorTag = settingTag.GetChildNode(backGroundColor_TAG);
+        XmlTagInfo backGroundLineColorTag = settingTag.GetChildNode(backGroundLineColor_TAG);
 
         XmlTagInfo itemsTag = saveTag.GetChildNode(items_TAG);
         XmlTagInfo[] itemTags = itemsTag.GetAllChildren();
@@ -474,43 +433,44 @@ public class SaveData
         XmlTagInfo wiresTag = saveTag.GetChildNode(wires_TAG);
         XmlTagInfo[] wireTags = wiresTag.GetAllChildren();
 
-        version = verTag.GetContent();
-        dateTime = DateTime.Parse(dateTimeTag.GetContent(), CultureInfo.InvariantCulture);
-        saveDisplayName = nameTag.GetContent();
+        version = infoTag.GetValueOfAttribute(ver_TAG);
+        dateTime = DateTime.Parse(infoTag.GetValueOfAttribute(dateTime_TAG), CultureInfo.InvariantCulture);
+        saveDisplayName = infoTag.GetValueOfAttribute(name_TAG);
 
         cameraPostion = Vector3Extension.Parse(cameraTag.GetContent());
-        Parse_backGroundColorContentTo_Colors(backGroundColorTag, out backColor, out lineColor);
+        Parse_ColorContentTo_Color(backGroundColorTag, out backColor);
+        Parse_ColorContentTo_Color(backGroundLineColorTag, out lineColor);
 
         itemInfos = Parse_itemsContentTo_ItemInfo(itemTags);
         wireInfos = Parse_wireContentTo_WireInfo(wireTags);
+
+        _prettySave = Save_Load_System.Singeleton.GeneratePrettySave;
     }
     public void Init(string saveName, Color backColor, Color lineColor)
     {
         this.backColor = backColor;
         this.lineColor = lineColor;
         saveDisplayName = saveName;
+
+        _prettySave = Save_Load_System.Singeleton.GeneratePrettySave;
     }
 
     public SaveData() { }
 
-    public string ToStringContent()
+    public StringBuilder ToStringContent()
     {
-        return Write_GameCurrentStateTo_StringContent();
+        return Write_GameCurrentStateTo_XmlStringContent();
     }
 
     // parsing methods:
-    private void Parse_backGroundColorContentTo_Colors(XmlTagInfo backGroundColorTag, out Color backColor, out Color lineColor)
+    private void Parse_ColorContentTo_Color(XmlTagInfo backGroundColorTag, out Color color)
     {
         string backGroundColorContent = backGroundColorTag.GetContent().Trim();
         string[] colorSegments = backGroundColorContent.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
-        float red1 = float.Parse(colorSegments[0]);
-        float green1 = float.Parse(colorSegments[1]);
-        float blue1 = float.Parse(colorSegments[2]);
-        float red2 = float.Parse(colorSegments[3]);
-        float green2 = float.Parse(colorSegments[4]);
-        float blue2 = float.Parse(colorSegments[5]);
-        backColor = new Color(red1, green1, blue1);
-        lineColor = new Color(red2, green2, blue2);
+        float red = float.Parse(colorSegments[0]);
+        float green = float.Parse(colorSegments[1]);
+        float blue = float.Parse(colorSegments[2]);
+        color = new Color(red, green, blue);
     }
     private ItemInfo[] Parse_itemsContentTo_ItemInfo(XmlTagInfo[] items)
     {
@@ -560,92 +520,37 @@ public class SaveData
         return wireInfos;
     }
 
-    // writing methods:
-    private string Write_SaveInfoTo_string(SaveInfo saveInfo)
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.Append(StartTag(info_TAG) + NEXT_LINE);
-        sb.Append(StartTag(ver_TAG) + SPACE + saveInfo.version.ToString() + SPACE + EndTag(ver_TAG) + NEXT_LINE);
-        sb.Append(StartTag(dateTime_TAG) + SPACE + saveInfo.dateTime.ToString(CultureInfo.InvariantCulture) + SPACE + EndTag(dateTime_TAG) + NEXT_LINE);
-        sb.Append(StartTag(name_TAG) + saveInfo.name + EndTag(name_TAG) + NEXT_LINE);
-        sb.Append(EndTag(info_TAG));
-
-        return sb.ToString();
-    }
-    private string Write_CameraInfoTo_string()
-    {
-        string content = Vector3Extension.ToString(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.orthographicSize));
-        return $"{StartTag(camera_TAG)} {content} {EndTag(camera_TAG)}";
-    }
-    private string Write_BackGroundColorTo_string()
-    {
-        string content = $"{backColor.r} {backColor.g} {backColor.b} {lineColor.r} {lineColor.g} {lineColor.b}";
-        return $"{StartTag(backGroundColor_TAG)} {content} {EndTag(backGroundColor_TAG)}";
-    }
-    private string Write_SettingTo_string()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.Append(StartTag(setting_TAG) + NEXT_LINE);
-        sb.Append(Write_CameraInfoTo_string() + NEXT_LINE);
-        sb.Append(Write_BackGroundColorTo_string() + NEXT_LINE);
-        sb.Append(EndTag(setting_TAG));
-
-        return sb.ToString();
-    }
-    private string Write_ItemInfoTo_string(ItemInfo itemInfo)
-    {
-        return StartTag(item_TAG) + SPACE + itemInfo.ToString() + SPACE + EndTag(item_TAG);
-    }
-    private string Write_WireInfoTo_string(WireInfo wireInfo)
-    {
-        return StartTag(wire_TAG) + SPACE + wireInfo.ToString() + SPACE + EndTag(wire_TAG);
-    }
-    private string Write_ItemsInfoTo_string(ItemInfo[] itemInfos)
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.Append(StartTag(items_TAG) + NEXT_LINE);
-        for (int i = 0; i < itemInfos.Length; i++)
-        {
-            sb.Append(Write_ItemInfoTo_string(itemInfos[i]) + NEXT_LINE);
-        }
-        sb.Append(EndTag(items_TAG));
-
-        return sb.ToString();
-    }
-    private string Write_WiresInfoTo_string(WireInfo[] wireInfos)
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.Append(StartTag(wires_TAG) + NEXT_LINE);
-        for (int i = 0; i < wireInfos.Length; i++)
-        {
-            sb.Append(Write_WireInfoTo_string(wireInfos[i]) + NEXT_LINE);
-        }
-        sb.Append(EndTag(wires_TAG));
-
-        return sb.ToString();
-    }
-    private string Write_GameCurrentStateTo_StringContent()
+    // writing method:
+    private StringBuilder Write_GameCurrentStateTo_XmlStringContent()
     {
         StringBuilder content = new StringBuilder();
         itemInfos = ItemManager.Singeleton.GetAllSpawnedItemsAsItemInfoes();
         wireInfos = ItemManager.Singeleton.GetAllSpawnedWiresAsWireInfoes();
 
-        content.Append(StartTag(save_TAG) + NEXT_LINE + NEXT_LINE);
-        content.Append(Write_SaveInfoTo_string(new SaveInfo(Application.version, saveDisplayName, DateTime.Now)) + NEXT_LINE + NEXT_LINE);
-        content.Append(Write_SettingTo_string() + NEXT_LINE + NEXT_LINE);
-        content.Append(Write_ItemsInfoTo_string(itemInfos) + NEXT_LINE + NEXT_LINE);
-        content.Append(Write_WiresInfoTo_string(wireInfos) + NEXT_LINE + NEXT_LINE);
-        content.Append(EndTag(save_TAG));
+        XmlElementDescriber saveNode = new (save_TAG, TagType.OpenClosed, null);
+        XmlElementDescriber infoNode = new(info_TAG, TagType.SelfClosed, saveNode, null);
+        infoNode.AddAttribute(ver_TAG, Application.version);
+        infoNode.AddAttribute(dateTime_TAG, DateTime.Now.ToString(CultureInfo.InvariantCulture));
+        infoNode.AddAttribute(name_TAG, saveDisplayName);
+        XmlElementDescriber settingNode = new(setting_TAG, TagType.OpenClosed, saveNode, null);
+        XmlElementDescriber cameraNode = new(camera_TAG, TagType.OpenClosed,settingNode ,Vector3Extension.ToString(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.orthographicSize)));
+        XmlElementDescriber backGroundColorNode = new(backGroundColor_TAG, TagType.OpenClosed,settingNode, $"{backColor.r} {backColor.g} {backColor.b}");
+        XmlElementDescriber backGroundLineColorNode = new(backGroundLineColor_TAG, TagType.OpenClosed,settingNode, $"{lineColor.r} {lineColor.g} {lineColor.b}");
+        XmlElementDescriber itemsNode = new(items_TAG, TagType.OpenClosed, saveNode, null);
+        for(int i = 0; i < itemInfos.Length; i++)
+        {
+            XmlElementDescriber itemNode = new(item_TAG, TagType.OpenClosed, itemInfos[i].ToString());
+            itemNode.SetParent(itemsNode);
+        }
+        XmlElementDescriber wiresNode = new(wires_TAG, TagType.OpenClosed, saveNode, null);
+        for (int i = 0; i < wireInfos.Length; i++)
+        {
+            XmlElementDescriber wireNode = new(wire_TAG, TagType.OpenClosed, wireInfos[i].ToString());
+            wireNode.SetParent(wiresNode);
+        }
 
-        return content.ToString();
+        content = saveNode.ConvertToStringContent(_prettySave ? TagFormat.Indent : TagFormat.Inline, 0);
+        return content;
     }
 
-    private string StartTag(string tagName) => $"<{tagName}>";
-    private string EndTag(string tagName) => $"</{tagName}>";
-
-
-}
+}// end of SaveData Class

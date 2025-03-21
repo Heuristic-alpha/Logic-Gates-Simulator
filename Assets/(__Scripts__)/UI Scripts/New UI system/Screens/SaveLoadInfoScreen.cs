@@ -32,7 +32,7 @@ public class SaveLoadInfoScreen : WindowScreenBase
     private const string NEW_SAVE_FA = "ایجاد ذخیره جدید";
     private string _newSaveName = "";
     private char[] _RANDOM_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-    private char[] _forbiden_Chars = { '<', '/', '>', '!', '\\' };
+    private char[] _forbiden_Chars = { '<', '/', '>', '!', '\\', '\"', '\'' };
     private bool _isInInfoMode;
 
     private string _saveFilePath;

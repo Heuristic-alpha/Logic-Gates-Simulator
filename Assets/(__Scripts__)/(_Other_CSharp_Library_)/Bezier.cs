@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace HSCL
+namespace HSCL.Bezier
 {
     public class Bezier
     {

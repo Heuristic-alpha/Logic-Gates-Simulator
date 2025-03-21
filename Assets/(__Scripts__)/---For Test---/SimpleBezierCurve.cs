@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using HSCL;
+using HSCL.Bezier;
 
 public class SimpleBezierCurve : MonoBehaviour
 {

@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HSCL
+// HSCL.XML Containes Basic Classes for creating and parsing XmlStrings.
+namespace HSCL.XML
 {
+    /// <summary>
+    /// Used for parsing an XmlString format and generates XmlTagInfo Tree.
+    /// </summary>
     public class XmlParser
     {
         const char OpenAngleBracket = '<';
@@ -11,7 +15,6 @@ namespace HSCL
         const char SlashSymbol = '/';
         const char EqualChar = '=';
         const char DoubleQuotes = '\"';
-        const string Indent = "    ";
 
         private char[] m_sourcArray;
         public List<XmlTagInfo> m_listOfTags = new List<XmlTagInfo>();
@@ -640,112 +643,12 @@ namespace HSCL
             }
             tagInfo = null;
             return false;
-        }
-
-        public static string ConvertToXmlFormat(TagType tagType, Format format, int indentLevel, string tagName, string tagContent)
-        {
-            if (format == Format.Inline)
-            {
-                if (tagType == TagType.SelfClosed)
-                {
-                    return $"<{tagName}/>";
-                }
-                else if (tagType == TagType.OpenClosed)
-                {
-                    return $"<{tagName}> {tagContent} </{tagContent}>";
-                }
-                else throw new NotImplementedException("ConvertToXmlFormat Error");
-            }
-            else if (format == Format.Indent)
-            {
-                if (tagType == TagType.SelfClosed)
-                {
-                    return MakeIndent(indentLevel) + $"<{tagName}/>";
-                }
-                else if (tagType == TagType.OpenClosed)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append($"<{tagName}>\n");
-                    sb.Append(MakeIndent(indentLevel + 1)); sb.Append(tagContent + "\n");
-                    sb.Append($"</{tagName}>\n");
-                    return sb.ToString();
-                }
-                else throw new NotImplementedException("ConvertToXmlFormat Error");
-            }
-            else throw new NotImplementedException("ConvertToXmlFormat Error");
-        }
-        public static string ConvertToXmlFormat(TagType tagType, Format format, int indentLevel, string tagName, string tagContent, XmlAttributeInfo[] xmlAttributes)
-        {
-            if (format == Format.Inline)
-            {
-                if (tagType == TagType.SelfClosed)
-                {
-                    return $"<{tagName} {MakeAtrStr(xmlAttributes)}/>";
-                }
-                else if (tagType == TagType.OpenClosed)
-                {
-                    return $"<{tagName} {MakeAtrStr(xmlAttributes)}> {tagContent} </{tagContent}>";
-                }
-                else throw new NotImplementedException("ConvertToXmlFormat Error");
-            }
-            else if (format == Format.Indent)
-            {
-                if (tagType == TagType.SelfClosed)
-                {
-                    return MakeIndent(indentLevel) + $"<{tagName} {MakeAtrStr(xmlAttributes)}/>";
-                }
-                else if (tagType == TagType.OpenClosed)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append($"<{tagName} {MakeAtrStr(xmlAttributes)}>\n"); // open
-                    sb.Append(MakeIndent(indentLevel + 1)); sb.Append(tagContent + "\n");
-                    sb.Append($"</{tagName}>\n");// close
-                    return sb.ToString();
-                }
-                else throw new NotImplementedException("ConvertToXmlFormat Error");
-            }
-            else throw new NotImplementedException("ConvertToXmlFormat Error");
-        }
-        private static string MakeIndent(int level)
-        {
-            string ret = "";
-            for (int i = 1; i <= level; i++) ret += Indent;
-            return ret;
-        }
-        private static string MakeAtrStr(XmlAttributeInfo[] xmlAttributes)
-        {
-            StringBuilder ret = new StringBuilder("");
-            for (int i = 0; i < xmlAttributes.Length; i++)
-            {
-                ret.Append($"{xmlAttributes[i].Name}=\"{xmlAttributes[i].Value}\"");
-                // cheks if there is another Attribute then add white space between them:
-                if (i + 1 < xmlAttributes.Length) ret.Append(" ");
-            }
-            return ret.ToString();
-        }
-        public enum TagType
-        {
-            OpenClosed,
-            SelfClosed,
-        }
-        public enum Format
-        {
-            Inline,
-            Indent,
-        }
+        }            
     }
 
-    public static class ArrayExtensions
-    {
-        public static T[] SubArray<T>(this T[] data, int startIndex, int endIndex)
-        {
-            int length = endIndex - startIndex + 1;
-            T[] result = new T[length];
-            Array.Copy(data, startIndex, result, 0, length);
-            return result;
-        }
-    }
-
+    /// <summary>
+    /// Created by XmlParser and containes information about TagElement.
+    /// </summary>
     public class XmlTagInfo
     {
         private readonly char[] sourcArray;
@@ -839,22 +742,201 @@ namespace HSCL
         }
     }
 
+    /// <summary>
+    /// Containes information about Attributes.
+    /// </summary>
     public class XmlAttributeInfo
     {
-        public string Name { get; set; } = "";
-        public string Value { get; set; } = "";
+        public readonly string Name;
+        public readonly string Value;
 
         public XmlAttributeInfo(string name, string value)
         {
             Name = name;
             Value = value;
         }
-
         public override string ToString()
         {
             return $"{Name}=\"{Value}\"";
         }
     }
 
-} // end of HSCL namespace
+    /// <summary>
+    /// XmlElementDescriber with nested relationShip describes one TagElement that allow to Generate an XML format Contents.
+    /// (can be nested with another to describe an XmlElement Tree.)
+    /// </summary>
+    public class XmlElementDescriber
+    {
+        public const string Indent = "\t";
+
+        public string TagName { get; private set; }
+        public TagType TagType { get; private set; }
+        public List<XmlElementDescriber> ChildNodes { get; private set; } = new List<XmlElementDescriber>();
+        public XmlElementDescriber ParentNode { get; private set; }
+        public List<XmlAttributeInfo> Attributes { get; private set; } = new List<XmlAttributeInfo>();
+        public string Text { get; private set; }
+        public int ChildCount { get { return ChildNodes.Count; } }
+
+        public XmlElementDescriber(string tagName, TagType tagType, string text)
+        {
+            TagType = tagType;
+            Text = text;
+            TagName = tagName;
+        }
+
+        public XmlElementDescriber(string tagName, TagType tagType, XmlElementDescriber parent, string text) : this(tagName, tagType, text)
+        {
+            SetParent(parent);
+        }
+
+        public void SetParent(XmlElementDescriber parent)
+        {
+            if (ParentNode != null) ParentNode.RemoveChild(this);           
+            ParentNode = parent;
+            if (ParentNode == null) return;
+            ParentNode.ChildNodes.Add(this);
+        }
+
+        public void AddChild(XmlElementDescriber child)
+        {
+            if (!ChildNodes.Contains(child))
+            {
+                ChildNodes.Add(child);
+                child.ParentNode = this;
+            }
+        }
+
+        public void RemoveChild(XmlElementDescriber child)
+        {
+            ChildNodes.Remove(child);
+            child.ParentNode = null;
+        }
+
+        public void AddAttribute(string name, string value)
+        {
+            Attributes.Add(new XmlAttributeInfo(name, value));
+        }
+        public void RemoveAllAttribute()
+        {
+            Attributes.Clear();
+        }
+        private string MakeAttributeString()
+        {
+            StringBuilder ret = new StringBuilder("");
+            for (int i = 0; i < Attributes.Count; i++)
+            {
+                ret.Append($"{Attributes[i].Name}=\"{Attributes[i].Value}\"");
+                // cheks if there is another Attribute then add white space between them:
+                if (i + 1 < Attributes.Count) ret.Append(" ");
+            }
+            return ret.ToString();
+        }
+
+        public StringBuilder ConvertToStringContent(TagFormat format, int indentLevel)
+        {
+            if (ParentNode == null) indentLevel = 0;
+            StringBuilder ret = new StringBuilder();
+
+            if(ChildCount > 0)
+            {
+                if(TagType == TagType.OpenClosed)
+                {
+                    if (format == TagFormat.Inline) 
+                    {
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}>");
+                        else ret.Append($"<{TagName}>");
+                        foreach(XmlElementDescriber child in ChildNodes)
+                        {
+                            ret.Append(child.ConvertToStringContent(format, indentLevel +1 ));
+                        }
+                        ret.Append($"</{TagName}>");
+                    }
+                    else if (format == TagFormat.Indent)
+                    {
+                        ret.Append(MakeIndent(indentLevel));
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}>");
+                        else ret.Append($"<{TagName}>");
+                        ret.Append("\n");
+                        foreach (XmlElementDescriber child in ChildNodes)
+                        {
+                            ret.Append(child.ConvertToStringContent(format, indentLevel + 1));
+                            ret.Append("\n");
+                        }
+                        ret.Append(MakeIndent(indentLevel));
+                        ret.Append($"</{TagName}>");                      
+                    }
+                    else throw new InvalidOperationException();
+                }
+                else throw new InvalidOperationException();
+            }
+            else // if Child Counts is 0 so Content only includes Text:
+            {
+                if (TagType == TagType.OpenClosed)
+                {
+                    if(format == TagFormat.Indent)
+                    {
+                        ret.Append(MakeIndent(indentLevel));
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}>{Text}</{TagName}>");
+                        else ret.Append($"<{TagName}>{Text}</{TagName}>");
+                    }
+                    else if (format == TagFormat.Inline)
+                    {
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}>{Text}</{TagName}>");
+                        else ret.Append($" <{TagName}>{Text}</{TagName}>");
+                    }
+                    else throw new InvalidOperationException();
+
+                }
+                else if (TagType == TagType.SelfClosed)
+                {
+                    if (format == TagFormat.Indent)
+                    {
+                        ret.Append(MakeIndent(indentLevel));
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}/>");
+                        else ret.Append($"<{TagName}/>");
+                    }
+                    else if (format == TagFormat.Inline)
+                    {
+                        if (Attributes.Count > 0) ret.Append($"<{TagName} {MakeAttributeString()}/>");
+                        else ret.Append($"<{TagName}/>");
+                    }
+                    else throw new InvalidOperationException();
+
+                }
+                else throw new InvalidOperationException();
+            }
+            return ret;
+
+        }
+        public string MakeIndent(int level)
+        {
+            string ret = "";
+            for (int i = 1; i <= level; i++) ret += Indent;
+            return ret;
+        }
+    }
+
+    internal static class ArrayExtensions
+    {
+        public static T[] SubArray<T>(this T[] data, int startIndex, int endIndex)
+        {
+            int length = endIndex - startIndex + 1;
+            T[] result = new T[length];
+            Array.Copy(data, startIndex, result, 0, length);
+            return result;
+        }
+    }
+
+    public enum TagType
+    {
+        OpenClosed,
+        SelfClosed,
+    }
+    public enum TagFormat
+    {
+        Inline,
+        Indent,
+    }
+
+} // end of HSCL.XML namespace
 
