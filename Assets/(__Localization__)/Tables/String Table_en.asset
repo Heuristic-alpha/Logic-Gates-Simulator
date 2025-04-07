@@ -39,11 +39,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 706814038499328
-    m_Localized: Rotate <color=blue>+90</color>
+    m_Localized: Rotate <color=#00f900>+90</color>
     m_Metadata:
       m_Items: []
   - m_Id: 707186891153408
-    m_Localized: Rotate <color=blue>-90</color>
+    m_Localized: Rotate <color=#00f900>-90</color>
     m_Metadata:
       m_Items: []
   - m_Id: 724839689084928
@@ -152,6 +152,43 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2052257381081088
     m_Localized: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13437271256170496
+    m_Localized: Placing Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13437680213393408
+    m_Localized: Context menu (delete, rotate)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13438604696715264
+    m_Localized: Placing wire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13438853867732992
+    m_Localized: '1) Click right panel
+
+      2) Sellect a category
+
+      3) Drag
+      and drop item to the screen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13439697455513600
+    m_Localized: '1) Right-click on the item with the mouse, or on touch screens,
+      place your first finger on the item and hold your second finger anywhere on
+      the screen for one second.
+
+      2) Open context menu'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13444639478087680
+    m_Localized: 'Pins are either "input" or "output" and are connected to each other
+      by wires.
+
+      To place a wire, drag from the output pin of one item to the
+      input pin of another item. (or vice versa)'
     m_Metadata:
       m_Items: []
   references:

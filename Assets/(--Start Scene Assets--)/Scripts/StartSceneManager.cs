@@ -37,7 +37,7 @@ public class StartSceneManager : MonoBehaviour
         _appNameLogoText = _AppNameLogo.GetComponent<TextMeshProUGUI>();
         _appNameDefaultPosY = _AppNameLogo.transform.localPosition.y;
         _logoDefaultCharSpacing = _appNameLogoText.characterSpacing;
-        _versionText.text = $"Version <b><color=\"orange\">\'{Application.version}\'</color=\"orange\"></b>";
+        _versionText.text = $"Version <color=\"yellow\">\'{Application.version}\'</color>";
         _menuBackGroundImage = _menuBackGroundImageObject.GetComponent<UnityEngine.UI.Image>();
     }
 

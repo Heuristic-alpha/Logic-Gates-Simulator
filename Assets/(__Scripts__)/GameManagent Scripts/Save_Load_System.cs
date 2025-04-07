@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 using Unity.Serialization.Json;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class Save_Load_System : MonoBehaviour
 {
