@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _border: {fileID: 1596278168}
-  cam: {fileID: 519420031}
+  _cam: {fileID: 519420031}
   _camMaxSize: 20
   _camMinSize: 3
   _camMouseZoomSpeed: 20
@@ -856,6 +856,7 @@ MonoBehaviour:
   _cameraController: {fileID: 519420033}
   _backGroundGridController: {fileID: 26760431}
   _tempSave: 0
+  GeneratePrettySave: 1
 --- !u!1 &1592090969
 GameObject:
   m_ObjectHideFlags: 0

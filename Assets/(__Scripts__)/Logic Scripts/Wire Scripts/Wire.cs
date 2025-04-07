@@ -1,7 +1,6 @@
-using System;
-using UnityEngine;
-using T_Generator;
 using HSCL.Bezier;
+using T_Generator;
+using UnityEngine;
 
 public class Wire : MonoBehaviour, IColorable
 {
@@ -13,7 +12,7 @@ public class Wire : MonoBehaviour, IColorable
         get { return _startPoint; }
         set
         {
-            _startPoint = value;         
+            _startPoint = value;
             _startPoint_Wirable = _startPoint.GetComponent<IWirable>();
         }
     }
@@ -27,8 +26,8 @@ public class Wire : MonoBehaviour, IColorable
         }
     }
 
-    public LogicColor LogicColor 
-    { 
+    public LogicColor LogicColor
+    {
         get => _logicColor;
         set => _logicColor = value;
     }
@@ -41,8 +40,8 @@ public class Wire : MonoBehaviour, IColorable
 
     // C# Properties: ////////////////////////////////////////////////////////// 
     // C# Consts: //////////////////////////////////////////////////////////////
-    public const float UnitLength = 0.6f;
-    public const int MinimumPoint = 15;
+    public const float UnitLength = 1f;
+    public const int MinimumPoint = 25;
     public const float WirePointsMinimumDistance = 0.5f;
     public const float WirePointsMaximumDistance = 21;
     public const float HelperPointMinimumLength = 0.5f;
@@ -52,9 +51,10 @@ public class Wire : MonoBehaviour, IColorable
 
     // C# Fields: //////////////////////////////////////////////////////////////
     private LogicColor _logicColor;
+    private CameraController _cameraController; // need this component to calculate _lineResolution with camera distance
 
-    int lineResolution;
-    float wireHelperPointLength;
+    int _lineResolution;
+    float _wireHelperPointLength;
 
     Vector2 _lastStartPointPosition;
     Vector2 _lastEndPointPosition;
@@ -63,6 +63,7 @@ public class Wire : MonoBehaviour, IColorable
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+        _cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     private void Update()
@@ -87,10 +88,12 @@ public class Wire : MonoBehaviour, IColorable
     private void OnEnable()
     {
         LogicUpdater.Singeleton.AddWire(this);
+        _cameraController.CameraHasChangeDistanceEvent += OnCameraChangeSizeEvent;
     }
     private void OnDisable()
     {
         LogicUpdater.Singeleton.RemoveWire(this);
+        _cameraController.CameraHasChangeDistanceEvent -= OnCameraChangeSizeEvent;
     }
 
     // C# Public Methods: //////////////////////////////////////////////////////
@@ -110,7 +113,7 @@ public class Wire : MonoBehaviour, IColorable
             Debug.LogError("this wire startPoint LogicState is Set to None!");
         }
     }
-    
+
     public WireInfo ToWireInfo(GameObject[] spawnedItems)
     {
         GameObject startPointItemGameObject = _startPoint_Wirable.GetItemGameObject();
@@ -126,28 +129,28 @@ public class Wire : MonoBehaviour, IColorable
         return new WireInfo(localItemId_s, pinType_s, pinIndex_s, localItemId_e, pinType_e, pinIndex_e);
 
         // local method:
-        int IndexOfWirePointsInArrayOf(GameObject[] spawnedItems , GameObject wirePoint)
+        int IndexOfWirePointsInArrayOf(GameObject[] spawnedItems, GameObject wirePoint)
         {
-            for(int i = 0; i < spawnedItems.Length; i++)
+            for (int i = 0; i < spawnedItems.Length; i++)
             {
                 if (ReferenceEquals(wirePoint, spawnedItems[i])) return i;
             }
             return -1;
         }
-}
+    }
 
     // C# Private Methods: /////////////////////////////////////////////////////
     private void UpdateLineRendererPoints()
     {
         CalculateLineSetting();
-        _lineRenderer.positionCount = lineResolution;
+        _lineRenderer.positionCount = _lineResolution;
 
-        Vector3 helperPoint1 = _startPoint.transform.position + (_startPoint_Wirable.GetHelperPointDirection() * wireHelperPointLength);
-        Vector3 helperPoint2 = _endPoint.transform.position + (_endPoint_Wirable.GetHelperPointDirection() * wireHelperPointLength);
+        Vector3 helperPoint1 = _startPoint.transform.position + (_startPoint_Wirable.GetHelperPointDirection() * _wireHelperPointLength);
+        Vector3 helperPoint2 = _endPoint.transform.position + (_endPoint_Wirable.GetHelperPointDirection() * _wireHelperPointLength);
 
-        for (int i = 0; i < lineResolution; i++)
+        for (int i = 0; i < _lineResolution; i++)
         {
-            float currentT = T_Holder.Get_t(lineResolution, i);
+            float currentT = T_Holder.Get_t(_lineResolution, i);
             Vector3 currentPoint = Bezier.Cubic2D(_startPoint.transform.position,
                                                   helperPoint1,
                                                   helperPoint2,
@@ -155,7 +158,7 @@ public class Wire : MonoBehaviour, IColorable
             _lineRenderer.SetPosition(i, currentPoint);
 
         }
-        
+
     }
     private void SetWireColor(in Color color)
     {
@@ -163,18 +166,19 @@ public class Wire : MonoBehaviour, IColorable
         _lineRenderer.endColor = color;
     }
 
-    // Calculate lineResolution and wireHelperPointLength:
+    // Calculate _lineResolution and _wireHelperPointLength:
     private void CalculateLineSetting()
     {
         Vector2 distance = _startPoint.transform.position - _endPoint.transform.position;
         float distanceLength = Mathf.Abs(distance.magnitude);
         float clampedDistance = Mathf.Clamp(distanceLength, WirePointsMinimumDistance, WirePointsMaximumDistance);
 
-        wireHelperPointLength = (clampedDistance / DisToLenRatio) + HelperPointMinimumLength;
+        _wireHelperPointLength = (clampedDistance / DisToLenRatio) + HelperPointMinimumLength;
 
         float temp = clampedDistance / UnitLength;
         temp += MinimumPoint;
-        lineResolution = (int)temp;
+        _lineResolution = (int)temp;
+        _lineResolution -= (int)_cameraController.CameraCurrentSize;
     }
     private void UpdateWireIfWirePointsAreInit()
     {
@@ -187,6 +191,10 @@ public class Wire : MonoBehaviour, IColorable
         if (_endPoint != null) _endPoint_Wirable.Wire_GameObject = null;
 
         Destroy(gameObject);
+    }
+    private void OnCameraChangeSizeEvent(float size)
+    {
+        UpdateLineRendererPoints();
     }
 
 } // end of class

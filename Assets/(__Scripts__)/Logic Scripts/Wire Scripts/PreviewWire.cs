@@ -109,7 +109,7 @@ public class PreviewWire : MonoBehaviour, IColorable
         
     }
 
-    // Calculate lineResolution and wireHelperPointLength:
+    // Calculate _lineResolution and _wireHelperPointLength:
     private void CalculateLineSetting()
     {
         Vector2 distance = _startPoint.transform.position - _endPoint.transform.position;

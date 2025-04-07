@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,17 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour, IBorderable
 {
+
     // Unity GameObjects: //////////////////////////////////////////////////////
     // Unity Components: ///////////////////////////////////////////////////////
     [SerializeField] Border _border;
-    [SerializeField] Camera cam;
+    [SerializeField] Camera _cam;
+
+    // C# Events: //////////////////////////////////////////////////////////////
+    public Action<float> CameraHasChangeDistanceEvent;
 
     // C# Properties: //////////////////////////////////////////////////////////
-    public float CameraCurrentSize { get { return cam.orthographicSize; } }
+    public float CameraCurrentSize { get { return _cam.orthographicSize; } }
     public float CameraMaxSize { get { return _camMaxSize; } }
     public float CameraMinSize { get { return _camMinSize; } }
     public bool IsMoving { get => _isMoving; set { _isMoving = value; } }
@@ -26,6 +31,7 @@ public class CameraController : MonoBehaviour, IBorderable
     [SerializeField] float _camMinSize;
     [SerializeField] float _camMouseZoomSpeed;
 
+    private float _cameraLastSize;
     private float _touchDistanceTolerance = 2;
     private float _camTouchZoomSpeed = 0.02f;
 
@@ -44,6 +50,13 @@ public class CameraController : MonoBehaviour, IBorderable
         UpdateCameraBorder();
         ZoomCameraWithMouse();
         ZoomCameraWith2Touch();
+
+        //check for camera Size change and fire Event:
+        if(Mathf.Abs(_cameraLastSize - _cam.orthographicSize) > 0.5f)
+        {
+            CameraHasChangeDistanceEvent?.Invoke(_cam.orthographicSize);
+            _cameraLastSize = _cam.orthographicSize;
+        }
     }
 
     // Unity Other Events: /////////////////////////////////////////////////////
@@ -53,11 +66,11 @@ public class CameraController : MonoBehaviour, IBorderable
         return _camBorder;
     }
 
-    public float GetCameraSize() => cam.orthographicSize;
+    public float GetCameraSize() => _cam.orthographicSize;
 
     public void SetCameraSizeExactly(float size)
     {
-        cam.orthographicSize = size;
+        _cam.orthographicSize = size;
 
         SetCameraBorder();
         Border.CheckAndResolve_BorderInBackGroundBorder(_camBorder);
@@ -65,15 +78,15 @@ public class CameraController : MonoBehaviour, IBorderable
 
     public void SetCameraPos(Vector2 pos)
     {
-        cam.transform.position = new Vector3(pos.x, pos.y, cam.transform.position.z);
+        _cam.transform.position = new Vector3(pos.x, pos.y, _cam.transform.position.z);
     }
     
     // C# Private Methods: /////////////////////////////////////////////////////
 
     private void SetCameraBorder()
     {
-        float yOffset = cam.orthographicSize;
-        float xOffset = yOffset * cam.aspect;
+        float yOffset = _cam.orthographicSize;
+        float xOffset = yOffset * _cam.aspect;
 
         _border.SetBorderUp(new Vector2(0,yOffset));
         _border.SetBorderDown(new Vector2(0,-yOffset));
@@ -97,8 +110,8 @@ public class CameraController : MonoBehaviour, IBorderable
         if (Input.mouseScrollDelta.y != 0)
         {
             float tempSize = -Input.mouseScrollDelta.y * Time.deltaTime * _camMouseZoomSpeed;
-            tempSize += cam.orthographicSize;
-            cam.orthographicSize = Mathf.Clamp(tempSize, _camMinSize, _camMaxSize);
+            tempSize += _cam.orthographicSize;
+            _cam.orthographicSize = Mathf.Clamp(tempSize, _camMinSize, _camMaxSize);
 
             SetCameraBorder();
             Border.CheckAndResolve_BorderInBackGroundBorder(_camBorder);
@@ -127,8 +140,8 @@ public class CameraController : MonoBehaviour, IBorderable
             if (Mathf.Abs(delta) < _touchDistanceTolerance) return;
 
             float tempSize = delta * _camTouchZoomSpeed;
-            tempSize += cam.orthographicSize;
-            cam.orthographicSize = Mathf.Clamp(tempSize, _camMinSize, _camMaxSize);
+            tempSize += _cam.orthographicSize;
+            _cam.orthographicSize = Mathf.Clamp(tempSize, _camMinSize, _camMaxSize);
 
             SetCameraBorder();
             Border.CheckAndResolve_BorderInBackGroundBorder(_camBorder);
