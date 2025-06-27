@@ -91,20 +91,39 @@ public class Save_Load_System : MonoBehaviour
     {
         if (File.Exists(path)) File.Delete(path);
     }
-    public bool GetSaveInfoFromSaveFilePath(string path, out string saveName, out string datetime)
+    public bool GetSaveInfoAndSettingFromSaveFilePath(string path, out string saveName, out string datetime , out Color baseColor, out Color lineColor)
     {
         XmlParser slightParser = new XmlParser(File.ReadAllText(path), SaveData.info_TAG);
         XmlTagInfo infoNode;
-        if(slightParser.TryGetXMLTagInfoFromTag(SaveData.info_TAG,out infoNode))
+        XmlTagInfo backColorNode;
+        XmlTagInfo lineColorNode;
+        if (slightParser.TryGetXMLTagInfoFromTag(SaveData.info_TAG,out infoNode) &&
+            slightParser.TryGetXMLTagInfoFromTag(SaveData.backGroundColor_TAG, out backColorNode) &&
+            slightParser.TryGetXMLTagInfoFromTag(SaveData.backGroundLineColor_TAG, out lineColorNode))
         {
             saveName = infoNode.GetValueOfAttribute(SaveData.name_TAG);
             datetime = infoNode.GetValueOfAttribute(SaveData.dateTime_TAG);
+            Parse_ColorContentTo_Color(backColorNode,out baseColor);
+            Parse_ColorContentTo_Color(lineColorNode, out lineColor);
             return true;
         }
         saveName = "Null";
         datetime = "Null";
+        baseColor = Color.black;
+        lineColor = Color.black;
         return false;
-    }
+
+        // local method for color parsing:
+        void Parse_ColorContentTo_Color(XmlTagInfo colorTag, out Color color)
+        {
+        string backGroundColorContent = colorTag.GetContent().Trim();
+        string[] colorSegments = backGroundColorContent.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+        float red = float.Parse(colorSegments[0]);
+        float green = float.Parse(colorSegments[1]);
+        float blue = float.Parse(colorSegments[2]);
+        color = new Color(red, green, blue);
+        }
+}
 
     // C# Private Methods: /////////////////////////////////////////////////////
     private void InitSingeleton()

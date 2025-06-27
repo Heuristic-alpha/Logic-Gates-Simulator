@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Inverted Illusion Triangle
-  productName: LogicGateSim
+  productName: LogicGatesSim
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.34509805, g: 0.34509805, b: 0.34509805, a: 1}
@@ -94,7 +94,7 @@ PlayerSettings:
   useFlipModelSwapchain: 1
   resizableWindow: 0
   useMacAppStoreValidation: 0
-  macAppStoreCategory: public.app-category.games
+  macAppStoreCategory: public.app
   gpuSkinning: 0
   xboxPIXTextureCapture: 0
   xboxEnableAvatar: 0
@@ -150,7 +150,7 @@ PlayerSettings:
   vrSettings:
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
-  enableFrameTimingStats: 0
+  enableFrameTimingStats: 1
   enableOpenGLProfilerGPURecorders: 1
   allowHDRDisplaySupport: 0
   useHDRDisplay: 0
@@ -162,8 +162,8 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.InvertedIllusionTriangle.LogicGateSim
-    Standalone: com.Inverted-Illusion-Triangle.LogicGateSim
+    Android: com.InvertedIllusionTriangle.LogicGatesSim
+    Standalone: com.Inverted-Illusion-Triangle.LogicGatesSim
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -265,8 +265,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: Android KeyStore/user.keystore'
+  AndroidKeyaliasName: iit
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -274,7 +274,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -651,7 +651,7 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Default
+  webGLTemplate: APPLICATION:Minimal
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 1
@@ -671,7 +671,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
-    Standalone: 0
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration:
     Android: 1

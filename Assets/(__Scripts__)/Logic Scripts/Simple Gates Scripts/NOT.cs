@@ -1,4 +1,5 @@
 using UnityEngine;
+using HSCL;
 
 public class NOT : MonoBehaviour, IBorderable, IItemable, ILogicHandler
 {
