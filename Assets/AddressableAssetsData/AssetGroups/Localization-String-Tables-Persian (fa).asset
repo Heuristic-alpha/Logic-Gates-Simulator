@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-Persian (fa)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Persian (fa)
-  m_Data:
-    m_SerializedData: []
   m_GUID: 7d4da28a0221ba34caecb0a978535679
   m_SerializeEntries:
   - m_GUID: 6125a4e66f7ce3d45883f2033a6b7bf6

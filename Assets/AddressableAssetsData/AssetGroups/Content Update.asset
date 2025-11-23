@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Localization-Locales
-  m_EditorClassIdentifier: 
-  m_GroupName: Localization-Locales
-  m_GUID: 1150f4bdc09256449b38e58d758f2d1e
+  m_Name: Content Update
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Content Update
+  m_GUID: afdf0ba1eb563a042aba19f21f67b3ba
   m_SerializeEntries:
-  - m_GUID: 05e2aeca17177b343a5040dec330d6d7
-    m_Address: English (en)
-    m_ReadOnly: 1
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a03c23cbb7fb89b48a3b184aefcff439
-    m_Address: Persian (fa)
-    m_ReadOnly: 1
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 0
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
-  m_ReadOnly: 1
+  m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 20b0702637e50034a8b3350e8c0d75eb, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 9c5abdcaa283ba24d9f6a3b55ddf2d8e, type: 2}
-    - {fileID: 11400000, guid: 4c299d01c3e55cc469c50c6a8a12fe25, type: 2}
+    - {fileID: 11400000, guid: 637ef27cac48ed448be6c60eb00b4f8d, type: 2}
+    - {fileID: 11400000, guid: 0f867de2bbce84a43b7e526af02d0ae2, type: 2}
