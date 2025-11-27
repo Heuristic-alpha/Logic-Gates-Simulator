@@ -13,8 +13,22 @@ MonoBehaviour:
   m_Name: Duplicate Asset Isolation
   m_EditorClassIdentifier: 
   m_GroupName: Duplicate Asset Isolation
+  m_Data:
+    m_SerializedData: []
   m_GUID: 0a6858f7955166a4d8c26aa27f0c9a3a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Locale
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Locale
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 20b0702637e50034a8b3350e8c0d75eb, type: 2}
   m_SchemaSet:

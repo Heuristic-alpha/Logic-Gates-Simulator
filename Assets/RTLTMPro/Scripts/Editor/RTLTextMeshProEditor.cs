@@ -2,20 +2,16 @@
 using UnityEditor;
 using UnityEngine;
 
-// Fix for CS0246: The type or namespace name 'TMP_UiEditorPanel' could not be found
-
-// Add a conditional fallback for TMP_UiEditorPanel if TMP_VERSION_2_1_0_OR_NEWER is not defined
 #if TMP_VERSION_2_1_0_OR_NEWER
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanelUI;
 #else
-using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanel;
+using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_UiEditorPanel;
 #endif
 
 namespace RTLTMPro
 {
     [CustomEditor(typeof(RTLTextMeshPro)), CanEditMultipleObjects]
     public class RTLTextMeshProEditor : TMP_UiEditorPanel
-
     {
         private SerializedProperty originalTextProp;
         private SerializedProperty preserveNumbersProp;
