@@ -6,6 +6,10 @@ A Unity-based interactive logic gate simulator that allows users to design, buil
 
 **LogicGateSim** is an educational and experimental project designed to provide an intuitive visual interface for creating and simulating digital logic circuits. Built with **C#** (74%) and **ShaderLab** (22.2%), the project leverages the power of the Unity game engine to deliver an interactive, real-time logic gate simulation experience.
 
+## Demo Video
+
+[Watch Demo](./Others/Demo.mp4)
+
 ---
 
 ## Features
