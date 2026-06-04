@@ -13,10 +13,13 @@ A Unity-based interactive logic gate simulator that allows users to design, buil
 ---
 ## Screenshots
 
-[Screenshot 1](./Others/Screenshot1.png)
-[Screenshot 2](./Others/Screenshot2.png)
-[Screenshot 3](./Others/Screenshot3.png)
-[Screenshot 4](./Others/Screenshot4.png)
+![Screenshot 1](./Others/Screenshot1.png)
+
+![Screenshot 2](./Others/Screenshot2.png)
+
+![Screenshot 3](./Others/Screenshot3.png)
+
+![Screenshot 4](./Others/Screenshot4.png)
 
 ---
 
