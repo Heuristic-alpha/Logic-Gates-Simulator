@@ -10,7 +10,6 @@ A Unity-based interactive logic gate simulator that allows users to design, buil
 
 [Download Demo](./Others/Demo.mp4)
 
----
 ## Screenshots
 
 ![Screenshot 1](./Others/Screenshot1.png)
@@ -21,9 +20,12 @@ A Unity-based interactive logic gate simulator that allows users to design, buil
 
 ![Screenshot 4](./Others/Screenshot4.png)
 
----
 
-## Features
+## Releases
+
+[Windows x64 setup](./Others/Setup.exe)
+
+---
 
 ### 🎯 Core Logic Gates
 
