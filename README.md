@@ -1,14 +1,22 @@
-# Logic Gate Simulator
+# Logic Gates Simulator
 
 A Unity-based interactive logic gate simulator that allows users to design, build, and test digital logic circuits with a comprehensive suite of fundamental logic gates and components.
 
 ## Overview
 
-**LogicGateSim** is an educational and experimental project designed to provide an intuitive visual interface for creating and simulating digital logic circuits. Built with **C#** (74%) and **ShaderLab** (22.2%), the project leverages the power of the Unity game engine to deliver an interactive, real-time logic gate simulation experience.
+**LogicGateSim** is an educational and experimental project designed to provide an intuitive visual interface for creating and simulating digital logic circuits. The project leverages the power of the Unity game engine to deliver an interactive, real-time logic gate simulation experience.
 
 ## Demo Video
 
-[Watch Demo](./Others/Demo.mp4)
+[Download Demo](./Others/Demo.mp4)
+
+---
+## Screenshots
+
+[Screenshot 1](./Others/Screenshot1.png)
+[Screenshot 2](./Others/Screenshot2.png)
+[Screenshot 3](./Others/Screenshot3.png)
+[Screenshot 4](./Others/Screenshot4.png)
 
 ---
 
@@ -66,12 +74,10 @@ Assets/
 │   │   ├── GateBase.cs                # Base class for all gates
 │   │   └── LogicHelper.cs             # Logic operation utilities
 │   ├── GameManagent Scripts/
-│   │   └── FPS_Helper.cs              # Frame rate management
 │   ├── UI Scripts/                    # User interface components
 │   └── (_Other_CSharp_Library_)/      # Utility libraries
 ├── (__Scriptable Objects__)/
 │   └── Scripts/Item.cs                # Gate and component items
-├── RTLTMPro/                          # Right-to-Left text support library
 └── Assets/                            # Game assets and prefabs
 ```
 
@@ -79,18 +85,9 @@ Assets/
 
 ## Technical Details
 
-### Language Composition
-
-- **C#** - 74% (Core game logic and gate implementations)
-- **ShaderLab** - 22.2% (Rendering and visual effects)
-- **HLSL** - 3.8% (Low-level shader programming)
-
 ### Key Technologies
 
 - **Unity Engine** - Game development and simulation framework
-- **TextMeshPro** - Advanced text rendering with RTL support
-- **Scriptable Objects** - Data-driven design for gates and components
-- **UI Toolkit** - Interactive user interface elements
 
 ### Architecture Highlights
 
@@ -207,8 +204,7 @@ See `LICENSE.txt` for full license details.
 
 ## Development
 
-**Created by**: Heuristic-alpha  
-**Repository**: https://github.com/Heuristic-alpha/LogicGateSim  
+**Created by**: Heuristic-alpha   
 **Status**: Active Development  
 **First Commit**: February 7, 2025
 
@@ -235,15 +231,6 @@ Contributions are welcome! Please feel free to submit issues, feature requests, 
 ## Support & Documentation
 
 For issues, questions, or suggestions, please open an issue on the GitHub repository or contact the project maintainers.
-
----
-
-## Acknowledgments
-
-Special thanks to:
-- Unity Technologies for the powerful game engine
-- TextMeshPro team for RTL text support
-- The open-source community for valuable feedback and contributions
 
 ---
 
