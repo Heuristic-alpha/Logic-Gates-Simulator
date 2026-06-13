@@ -24,6 +24,7 @@ A Unity-based interactive logic gate simulator that allows users to design, buil
 ## Releases
 
 [Windows x64 (ver 1.0.5) setup](./Others/Setup.exe)
+
 [Android (ver 1.0.5) apk](./Others/LogicGatesSimulator.apk)
 
 ---
